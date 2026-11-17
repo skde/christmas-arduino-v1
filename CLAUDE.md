@@ -88,7 +88,8 @@ google-chrome --headless=new --disable-gpu --use-angle=swiftshader --enable-unsa
   --screenshot=<scratch>/shot.png "file://$PWD/concept/concept-page.html"
 ```
 
-- Use a fresh `--user-data-dir` for each run, or later runs hang.
+- Use a fresh `--user-data-dir` for each run, or later runs hang. Put it under `~/.cache/` (and delete it afterwards): a profile in the scratchpad `/tmp` path makes the render hang.
+- `drawings/scene.png` (the README picture) is the default view at `--window-size=960,600 --virtual-time-budget=3000`, rendered from a temp copy that makes `.viewer` fill the window and hides `header.top`, `.zoom` and `.hint`. It takes about 75 s. 1400 × 875 did not finish in 10 minutes. Re-render it when the scene changes visibly.
 - Chrome may fail to load files from the scratchpad `/tmp` path. Copy a temp view file next to the page, render it, then delete it.
 - For a close-up, render a temp copy with `cam.position.set(...)` / `orbit.target.set(...)` changed and labels off.
 - Close-ups need smaller settings: `--window-size=900,700 --virtual-time-budget=3000`, wrapped in `timeout 120`. Chrome draws the scene on the CPU (swiftshader). Glow sprites that fill the screen near the camera make each frame slow, so the full-size settings hang past two minutes at close range. The smaller settings take about 75 s. The default view renders in about 20 s at full size.

@@ -3,6 +3,8 @@
 A 70 × 45 cm cardboard Christmas village with an Arduino Nano hidden in the base.
 It wakes when the room goes dark and runs a five-part evening show.
 
+![Lantern Square: 3D concept model with the chapel, bakery, cottage, turning tree on the rink, frozen river and moon backdrop](drawings/scene.png)
+
 Live concept page with 3D model and wiring diagram:
 https://claude.ai/artifact/FHZcgud7m9V3Vm3JpK5WeD
 (`concept/concept-page.html` is a local copy of its source. It needs the artifact viewer's wrapper or a browser, and internet for the 3D library.)
@@ -21,6 +23,7 @@ https://claude.ai/artifact/FHZcgud7m9V3Vm3JpK5WeD
 | [concept/concept-page.html](concept/concept-page.html) | Source of the live concept page |
 | [drawings/templates/house-templates.pdf](drawings/templates/house-templates.pdf) | Printable 1:1 cutting templates for the three houses |
 | [drawings/templates/tree-templates.pdf](drawings/templates/tree-templates.pdf) | Printable 1:1 cutting templates for the tree |
+| [drawings/scene.png](drawings/scene.png) | Screenshot of the 3D concept model, shown at the top of this README |
 | [drawings/turntable-section.svg](drawings/turntable-section.svg) | Turntable cross-section drawing, opens in any browser |
 | `tools/house-templates.py` | Draws the house templates into `drawings/templates/` |
 | `tools/tree-templates.py` | Draws the tree templates (uses house-templates.py) |
