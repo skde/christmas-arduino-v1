@@ -1,0 +1,176 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1110 650" width="1110" height="650" role="img" aria-label="Cross-section of the turntable. A paper tree stands on a 22 cm rink disc that sits flush in a hole in the deck. A flange coupling joins the disc to an 8 mm brass tube carrying the tree wires. The tube runs through two KFL08 flange bearings on a plywood drive plate. A 60-tooth pulley on the tube is driven by a GT2 belt from a 20-tooth pulley on the 28BYJ-48 stepper beside it, a 3 to 1 reduction. Below the plate, a silicone hose joins the tube to the slip ring rotor. The slip ring body is screwed to the base floor and its six wires run to the Nano and power rail.">
+<title>Lantern Square turntable, cross-section</title>
+<style>
+.tt-card{fill:#c49a66;stroke:#8c6a42}.tt-wood{fill:#b5844f;stroke:#7d5a33}.tt-foam{fill:#6b7894}
+.tt-zinc{fill:#9aa3b2;stroke:#5d6576}.tt-ball{fill:#e4e8ef;stroke:#5d6576}.tt-bolt{fill:#3b4150}
+.tt-ring{fill:#2a2d36;stroke:#8d97ab}.tt-in{font:600 11px "IBM Plex Mono",monospace;fill:#efeadf}
+.tt-tube{fill:#d8b65a;stroke:#8a7030}.tt-bore{fill:#141a28}.tt-hose{fill:#7cc0a6;fill-opacity:.55;stroke:#7cc0a6}
+.tt-alu{fill:#c9d0da;stroke:#6f7889}.tt-motor{fill:#b9c0cb;stroke:#6f7889}.tt-cap{fill:#3a68b5;stroke:#24467f}
+.tt-shaft{fill:#e4e8ef;stroke:#6f7889}.tt-rub{fill:#1a1a20}.tt-belt{fill:#2b2f3a;stroke:#efeadf;stroke-width:1}
+.tt-strand{fill:#2b2f3a;stroke:#efeadf;stroke-width:1;stroke-dasharray:5 3}
+.tt-deck{fill:#efeadf;stroke:#a89c86}.tt-disc{fill:#c3d6ea;stroke:#7d93ad}.tt-trunk{fill:#8c6a42}
+.tt-tree{fill:#2f6650;stroke:#244f3e}.tt-break{fill:none;stroke:#efeadf;stroke-width:2}
+.tt-led0{fill:#ffbf69}.tt-led1{fill:#ef7663}.tt-led2{fill:#8fd0ff}
+.tt-wr{stroke:#ef7663;stroke-width:1.6;fill:none}.tt-wk{stroke:#aab3c6;stroke-width:1.6;fill:none}.tt-wy{stroke:#ffbf69;stroke-width:1.6;fill:none}
+.tt-lead{stroke:#efeadf;stroke-width:1;opacity:.8}.tt-dot{fill:#efeadf}
+.tt-bub{fill:#ffbf69}.tt-n{font:700 11px "IBM Plex Mono",monospace;fill:#2b1e10}
+.tt-h{font:700 20px "Grenze Gotisch",Georgia,serif;fill:#ffbf69}.tt-k{font:400 13px "Atkinson Hyperlegible",system-ui,sans-serif;fill:#efeadf}
+.tt-note{font:400 12px "IBM Plex Mono",monospace;fill:#aab3c6}
+</style>
+<rect width="1110" height="650" fill="#0f1626"/>
+<rect class="tt-card" x="62" y="560" width="676" height="13.0"/>
+<rect class="tt-foam" x="231.0" y="552.2" width="39.0" height="7.8"/>
+<rect class="tt-wood" x="231.0" y="463.8" width="39.0" height="88.4"/>
+<rect class="tt-foam" x="608.0" y="552.2" width="39.0" height="7.8"/>
+<rect class="tt-wood" x="608.0" y="463.8" width="39.0" height="88.4"/>
+<rect class="tt-wood" x="218" y="448.2" width="170.3" height="15.6"/>
+<rect class="tt-wood" x="411.7" y="448.2" width="235.3" height="15.6"/>
+<rect class="tt-zinc" x="337.6" y="440.4" width="124.8" height="7.8"/>
+<rect class="tt-zinc" x="371.4" y="419.6" width="57.2" height="20.8"/>
+<circle class="tt-ball" cx="380.5" cy="430.0" r="5.72"/>
+<circle class="tt-ball" cx="419.5" cy="430.0" r="5.72"/>
+<rect class="tt-bolt" x="347.5" y="440.4" width="6.2" height="23.4"/>
+<rect class="tt-bolt" x="446.3" y="440.4" width="6.2" height="23.4"/>
+<rect class="tt-zinc" x="337.6" y="463.8" width="124.8" height="7.8"/>
+<rect class="tt-zinc" x="371.4" y="471.6" width="57.2" height="20.8"/>
+<circle class="tt-ball" cx="380.5" cy="482.0" r="5.72"/>
+<circle class="tt-ball" cx="419.5" cy="482.0" r="5.72"/>
+<rect class="tt-bolt" x="347.5" y="448.2" width="6.2" height="23.4"/>
+<rect class="tt-bolt" x="446.3" y="448.2" width="6.2" height="23.4"/>
+<rect class="tt-ring" x="342.8" y="552.2" width="114.4" height="7.8"/>
+<rect class="tt-ring" x="371.4" y="515.8" width="57.2" height="36.4"/>
+<rect class="tt-ring" x="387.0" y="500.2" width="26.0" height="15.6"/>
+<rect class="tt-bolt" x="353.2" y="552.2" width="5.2" height="18.2"/>
+<rect class="tt-bolt" x="441.6" y="552.2" width="5.2" height="18.2"/>
+<path class="tt-wr" d="M428.6 534.0 C478 534.0,504 541.8,571.6 541.8"/>
+<path class="tt-wk" d="M428.6 537.9 C478 537.9,504 545.7,571.6 545.7"/>
+<path class="tt-wy" d="M428.6 530.1 C478 530.1,504 537.9,571.6 537.9"/>
+<rect class="tt-tube" x="389.6" y="339.0" width="20.8" height="158.6"/>
+<rect class="tt-bore" x="392.7" y="339.0" width="14.6" height="158.6"/>
+<line class="tt-wr" x1="396.6" y1="502.8" x2="396.6" y2="310.4"/>
+<line class="tt-wk" x1="400" y1="502.8" x2="400" y2="310.4"/>
+<line class="tt-wy" x1="403.4" y1="502.8" x2="403.4" y2="310.4"/>
+<rect class="tt-hose" x="383.9" y="483.3" width="32.2" height="28.6"/>
+<rect class="tt-alu" x="371.4" y="389.7" width="57.2" height="14.3"/>
+<rect class="tt-alu" x="350.6" y="372.8" width="98.8" height="15.6"/>
+<rect class="tt-alu" x="345.4" y="388.4" width="109.2" height="2.6"/>
+<rect class="tt-alu" x="345.4" y="370.2" width="109.2" height="2.6"/>
+<rect class="tt-bolt" x="371.4" y="393.6" width="5.2" height="6.5"/>
+<rect class="tt-rub" x="516.0" y="443.0" width="15.6" height="5.2"/>
+<rect class="tt-zinc" x="519.9" y="398.8" width="7.8" height="44.2"/>
+<rect class="tt-rub" x="614.8" y="443.0" width="15.6" height="5.2"/>
+<rect class="tt-zinc" x="618.7" y="398.8" width="7.8" height="44.2"/>
+<rect class="tt-motor" x="536.8" y="396.2" width="72.8" height="44.2" rx="6"/>
+<rect class="tt-cap" x="609.6" y="404.0" width="11.4" height="31.2"/>
+<rect class="tt-zinc" x="518.6" y="395.7" width="109.2" height="3.1"/>
+<rect class="tt-zinc" x="540.7" y="392.3" width="23.4" height="3.9"/>
+<rect class="tt-shaft" x="545.9" y="357.2" width="13.0" height="35.1"/>
+<rect class="tt-alu" x="535.7" y="372.8" width="33.3" height="15.6"/>
+<rect class="tt-alu" x="531.6" y="388.4" width="41.6" height="2.6"/>
+<rect class="tt-alu" x="531.6" y="370.2" width="41.6" height="2.6"/>
+<rect class="tt-alu" x="532.9" y="357.2" width="39.0" height="13.0"/>
+<text class="tt-in" x="573.2" y="422.2" text-anchor="middle">28BYJ-48</text>
+<rect class="tt-belt" x="346.7" y="373.3" width="3.9" height="14.6"/>
+<rect class="tt-belt" x="569.0" y="373.3" width="3.9" height="14.6"/>
+<rect class="tt-strand" x="449.4" y="373.3" width="86.3" height="14.6"/>
+<rect class="tt-alu" x="381.8" y="349.4" width="36.4" height="15.6"/>
+<rect class="tt-alu" x="358.4" y="339.0" width="83.2" height="10.4"/>
+<rect class="tt-bolt" x="366.2" y="326.0" width="5.2" height="23.4"/>
+<rect class="tt-bolt" x="428.6" y="326.0" width="5.2" height="23.4"/>
+<rect class="tt-deck" x="62" y="326.0" width="45.5" height="13.0"/>
+<rect class="tt-deck" x="692.5" y="326.0" width="45.5" height="13.0"/>
+<rect class="tt-disc" x="114" y="326.0" width="572" height="13.0"/>
+<rect class="tt-trunk" x="376.6" y="274" width="46.8" height="52.0"/>
+<polygon class="tt-tree" points="186.8,274 613.2,274 539.9,131.0 260.1,131.0"/>
+<polyline class="tt-break" points="249.7,137.5 279.8,124.5 309.8,137.5 339.9,124.5 369.9,137.5 400.0,124.5 430.1,137.5 460.1,124.5 490.2,137.5 520.2,124.5 550.3,137.5"/>
+<circle class="tt-led0" cx="257.0" cy="242.8" r="5.72"/>
+<circle class="tt-led1" cx="348" cy="206.4" r="5.72"/>
+<circle class="tt-led2" cx="483.2" cy="232.4" r="5.72"/>
+<circle class="tt-led0" cx="561.2" cy="258.4" r="5.72"/>
+<circle class="tt-led1" cx="285.6" cy="159.6" r="5.72"/>
+<circle class="tt-led2" cx="436.4" cy="154.4" r="5.72"/>
+<circle class="tt-led0" cx="223.2" cy="261.0" r="5.72"/>
+<line class="tt-wy" x1="403.4" y1="310.4" x2="403.4" y2="284.4"/>
+<line class="tt-lead" x1="127.0" y1="216.8" x2="202.4" y2="216.8"/>
+<circle class="tt-dot" cx="202.4" cy="216.8" r="2.2"/>
+<line class="tt-lead" x1="155.6" y1="292.2" x2="155.6" y2="326.0"/>
+<circle class="tt-dot" cx="155.6" cy="326.0" r="2.2"/>
+<line class="tt-lead" x1="82.8" y1="292.2" x2="82.8" y2="326.0"/>
+<circle class="tt-dot" cx="82.8" cy="326.0" r="2.2"/>
+<line class="tt-lead" x1="231.0" y1="350.7" x2="358.4" y2="344.2"/>
+<circle class="tt-dot" cx="358.4" cy="344.2" r="2.2"/>
+<line class="tt-lead" x1="231.0" y1="410.5" x2="389.6" y2="410.5"/>
+<circle class="tt-dot" cx="389.6" cy="410.5" r="2.2"/>
+<line class="tt-lead" x1="231.0" y1="380.6" x2="345.4" y2="380.6"/>
+<circle class="tt-dot" cx="345.4" cy="380.6" r="2.2"/>
+<line class="tt-lead" x1="488.4" y1="355.9" x2="488.4" y2="373.3"/>
+<circle class="tt-dot" cx="488.4" cy="373.3" r="2.2"/>
+<line class="tt-lead" x1="691.2" y1="363.7" x2="573.2" y2="363.7"/>
+<circle class="tt-dot" cx="573.2" cy="363.7" r="2.2"/>
+<line class="tt-lead" x1="691.2" y1="414.4" x2="621.0" y2="414.4"/>
+<circle class="tt-dot" cx="621.0" cy="414.4" r="2.2"/>
+<line class="tt-lead" x1="691.2" y1="445.6" x2="630.4" y2="445.6"/>
+<circle class="tt-dot" cx="630.4" cy="445.6" r="2.2"/>
+<line class="tt-lead" x1="231.0" y1="431.3" x2="371.4" y2="431.3"/>
+<circle class="tt-dot" cx="371.4" cy="431.3" r="2.2"/>
+<line class="tt-lead" x1="176.4" y1="482.0" x2="218.0" y2="458.6"/>
+<circle class="tt-dot" cx="218.0" cy="458.6" r="2.2"/>
+<line class="tt-lead" x1="303.8" y1="482.0" x2="371.4" y2="482.0"/>
+<circle class="tt-dot" cx="371.4" cy="482.0" r="2.2"/>
+<line class="tt-lead" x1="303.8" y1="504.1" x2="383.9" y2="497.6"/>
+<circle class="tt-dot" cx="383.9" cy="497.6" r="2.2"/>
+<line class="tt-lead" x1="467.6" y1="492.4" x2="413.0" y2="508.0"/>
+<circle class="tt-dot" cx="413.0" cy="508.0" r="2.2"/>
+<line class="tt-lead" x1="303.8" y1="536.6" x2="371.4" y2="536.6"/>
+<circle class="tt-dot" cx="371.4" cy="536.6" r="2.2"/>
+<line class="tt-lead" x1="691.2" y1="502.8" x2="647.0" y2="502.8"/>
+<circle class="tt-dot" cx="647.0" cy="502.8" r="2.2"/>
+<line class="tt-lead" x1="108.8" y1="592.5" x2="108.8" y2="573.0"/>
+<circle class="tt-dot" cx="108.8" cy="573.0" r="2.2"/>
+<line class="tt-lead" x1="597.6" y1="518.4" x2="571.6" y2="537.9"/>
+<circle class="tt-dot" cx="571.6" cy="537.9" r="2.2"/>
+<circle class="tt-bub" cx="127.0" cy="216.8" r="10"/><text class="tt-n" x="127.0" y="220.8" text-anchor="middle">1</text>
+<circle class="tt-bub" cx="155.6" cy="292.2" r="10"/><text class="tt-n" x="155.6" y="296.2" text-anchor="middle">2</text>
+<circle class="tt-bub" cx="82.8" cy="292.2" r="10"/><text class="tt-n" x="82.8" y="296.2" text-anchor="middle">3</text>
+<circle class="tt-bub" cx="231.0" cy="350.7" r="10"/><text class="tt-n" x="231.0" y="354.7" text-anchor="middle">4</text>
+<circle class="tt-bub" cx="231.0" cy="410.5" r="10"/><text class="tt-n" x="231.0" y="414.5" text-anchor="middle">5</text>
+<circle class="tt-bub" cx="231.0" cy="380.6" r="10"/><text class="tt-n" x="231.0" y="384.6" text-anchor="middle">6</text>
+<circle class="tt-bub" cx="488.4" cy="355.9" r="10"/><text class="tt-n" x="488.4" y="359.9" text-anchor="middle">7</text>
+<circle class="tt-bub" cx="691.2" cy="363.7" r="10"/><text class="tt-n" x="691.2" y="367.7" text-anchor="middle">8</text>
+<circle class="tt-bub" cx="691.2" cy="414.4" r="10"/><text class="tt-n" x="691.2" y="418.4" text-anchor="middle">9</text>
+<circle class="tt-bub" cx="691.2" cy="445.6" r="10"/><text class="tt-n" x="691.2" y="449.6" text-anchor="middle">10</text>
+<circle class="tt-bub" cx="231.0" cy="431.3" r="10"/><text class="tt-n" x="231.0" y="435.3" text-anchor="middle">11</text>
+<circle class="tt-bub" cx="176.4" cy="482.0" r="10"/><text class="tt-n" x="176.4" y="486.0" text-anchor="middle">12</text>
+<circle class="tt-bub" cx="303.8" cy="482.0" r="10"/><text class="tt-n" x="303.8" y="486.0" text-anchor="middle">13</text>
+<circle class="tt-bub" cx="303.8" cy="504.1" r="10"/><text class="tt-n" x="303.8" y="508.1" text-anchor="middle">14</text>
+<circle class="tt-bub" cx="467.6" cy="492.4" r="10"/><text class="tt-n" x="467.6" y="496.4" text-anchor="middle">15</text>
+<circle class="tt-bub" cx="303.8" cy="536.6" r="10"/><text class="tt-n" x="303.8" y="540.6" text-anchor="middle">16</text>
+<circle class="tt-bub" cx="691.2" cy="502.8" r="10"/><text class="tt-n" x="691.2" y="506.8" text-anchor="middle">17</text>
+<circle class="tt-bub" cx="108.8" cy="592.5" r="10"/><text class="tt-n" x="108.8" y="596.5" text-anchor="middle">18</text>
+<circle class="tt-bub" cx="597.6" cy="518.4" r="10"/><text class="tt-n" x="597.6" y="522.4" text-anchor="middle">19</text>
+<text class="tt-h" x="770" y="42">Parts</text>
+<circle class="tt-bub" cx="780" cy="66" r="10"/><text class="tt-n" x="780" y="70" text-anchor="middle">1</text><text class="tt-k" x="798" y="70">Paper tree with LEDs (cut short here)</text>
+<circle class="tt-bub" cx="780" cy="91" r="10"/><text class="tt-n" x="780" y="95" text-anchor="middle">2</text><text class="tt-k" x="798" y="95">Rink disc, 22 cm, foil covered</text>
+<circle class="tt-bub" cx="780" cy="116" r="10"/><text class="tt-n" x="780" y="120" text-anchor="middle">3</text><text class="tt-k" x="798" y="120">Deck, lifts off over the disc</text>
+<circle class="tt-bub" cx="780" cy="141" r="10"/><text class="tt-n" x="780" y="145" text-anchor="middle">4</text><text class="tt-k" x="798" y="145">8 mm flange coupling, screwed to the disc</text>
+<circle class="tt-bub" cx="780" cy="166" r="10"/><text class="tt-n" x="780" y="170" text-anchor="middle">5</text><text class="tt-k" x="798" y="170">8 mm brass tube, tree wires inside</text>
+<circle class="tt-bub" cx="780" cy="191" r="10"/><text class="tt-n" x="780" y="195" text-anchor="middle">6</text><text class="tt-k" x="798" y="195">GT2 pulley, 60 teeth</text>
+<circle class="tt-bub" cx="780" cy="216" r="10"/><text class="tt-n" x="780" y="220" text-anchor="middle">7</text><text class="tt-k" x="798" y="220">GT2 belt, 200 mm, 3:1</text>
+<circle class="tt-bub" cx="780" cy="241" r="10"/><text class="tt-n" x="780" y="245" text-anchor="middle">8</text><text class="tt-k" x="798" y="245">GT2 pulley, 20 teeth</text>
+<circle class="tt-bub" cx="780" cy="266" r="10"/><text class="tt-n" x="780" y="270" text-anchor="middle">9</text><text class="tt-k" x="798" y="270">28BYJ-48 stepper motor</text>
+<circle class="tt-bub" cx="780" cy="291" r="10"/><text class="tt-n" x="780" y="295" text-anchor="middle">10</text><text class="tt-k" x="798" y="295">Rubber washers on standoffs</text>
+<circle class="tt-bub" cx="780" cy="316" r="10"/><text class="tt-n" x="780" y="320" text-anchor="middle">11</text><text class="tt-k" x="798" y="320">Upper KFL08 flange bearing</text>
+<circle class="tt-bub" cx="780" cy="341" r="10"/><text class="tt-n" x="780" y="345" text-anchor="middle">12</text><text class="tt-k" x="798" y="345">Drive plate, 6 mm plywood</text>
+<circle class="tt-bub" cx="780" cy="366" r="10"/><text class="tt-n" x="780" y="370" text-anchor="middle">13</text><text class="tt-k" x="798" y="370">Lower KFL08 flange bearing</text>
+<circle class="tt-bub" cx="780" cy="391" r="10"/><text class="tt-n" x="780" y="395" text-anchor="middle">14</text><text class="tt-k" x="798" y="395">Silicone hose, flexible joint</text>
+<circle class="tt-bub" cx="780" cy="416" r="10"/><text class="tt-n" x="780" y="420" text-anchor="middle">15</text><text class="tt-k" x="798" y="420">Slip ring rotor, turns with tree</text>
+<circle class="tt-bub" cx="780" cy="441" r="10"/><text class="tt-n" x="780" y="445" text-anchor="middle">16</text><text class="tt-k" x="798" y="445">Slip ring body and flange, fixed</text>
+<circle class="tt-bub" cx="780" cy="466" r="10"/><text class="tt-n" x="780" y="470" text-anchor="middle">17</text><text class="tt-k" x="798" y="470">Wooden block on foam</text>
+<circle class="tt-bub" cx="780" cy="491" r="10"/><text class="tt-n" x="780" y="495" text-anchor="middle">18</text><text class="tt-k" x="798" y="495">Base floor</text>
+<circle class="tt-bub" cx="780" cy="516" r="10"/><text class="tt-n" x="780" y="520" text-anchor="middle">19</text><text class="tt-k" x="798" y="520">6 wires to Nano, 5V and GND</text>
+<text class="tt-note" x="770" y="557">Heights from the floor: plate 4.3 cm,</text>
+<text class="tt-note" x="770" y="577">belt 6.9 cm, deck 9.0 cm.</text>
+<text class="tt-note" x="770" y="597">Axle to motor shaft: 58.6 mm.</text>
+<text class="tt-note" x="770" y="617">Section through the axle, roughly to scale.</text>
+<text class="tt-note" x="770" y="637">Heights change once the slip ring is measured.</text>
+</svg>

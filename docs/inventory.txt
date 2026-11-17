@@ -1,0 +1,81 @@
+LANTERN SQUARE: PARTS ON HAND
+Taken from 29 photos reviewed on 2026-11-06, plus 2 more (IMG_1107, 1108) on 2026-11-13, and IMG_1109 and slipring.png later the same day.
+Counts are what the photos showed, so there may be more.
+"?" means the identification is unsure.
+
+CONTROLLERS
+- Arduino Nano, at least 2, mini USB, header pins not soldered (IMG_1073, 1075)
+  Processor: ATmega168 (16 KB flash, 1 KB RAM), reported by the user on 2026-11-13.
+  Not yet confirmed whether every Nano has the ATmega168.
+- Arduino Mega 2560, user's own and free to use (IMG_1085)
+- L293D motor shield, "MH Electronics", on the Mega (IMG_1069, 1085)
+
+MOTORS
+- 28BYJ-48 5 V stepper motor, 1 (IMG_1060)
+- ULN2003 stepper driver board, 1, inputs IN1-IN4 populated (IMG_1060)
+- SG90-type micro servos, several, with horns (IMG_1071; count from the user 2026-11-17)
+- Servo on the Mega robot car build (IMG_1085): stays on the car
+- Small DC motor with wires, 1 (IMG_1068)
+
+LEDS
+- WS2812B-type flexible matrix, 16 x 16, 256 pixels, 3-wire in/out, 2-wire power (IMG_1084)
+- White LED strip on a reel, not addressable, voltage unknown (IMG_1086)
+- Yellow diffused 5 mm LEDs, about 100 (IMG_1063)
+- Red 5 mm LEDs, about 100 (IMG_1074)
+- Green 5 mm LEDs, about 100 (IMG_1074)
+- Water-clear 5 mm LEDs, about 100, colour unknown, probably blue ? (IMG_1074)
+- Small labelled bag, contents unclear ? (IMG_1074)
+
+SENSORS AND INPUTS
+- PIR motion sensor, HC-SR501 type, 1 (IMG_1077)
+- HC-SR04 ultrasonic sensor, 1 (IMG_1067)
+- 4-pin sensor board with LM393 and trimmer, sensor type unknown ? (IMG_1070)
+- IR remote kit: Keyes IR receiver module (3 pins: S, +, -), 17-key remote (0-9, *, #, arrows, OK), jumper wires (IMG_1109)
+- 6-pad touch board (IMG_1080)
+- Tactile buttons with white, red, blue and yellow caps, many (IMG_1062)
+- Rocker switch, 1 (IMG_1061)
+- Slide switch, 1 (IMG_1081)
+
+DISPLAY AND SOUND
+- 20 x 4 LCD (2004A) with I2C backpack, 1 (IMG_1082, 1083)
+- Buzzers, several, active (tested) (IMG_1064)
+- Buzzer module MH-FMD, 3-pin GND/I/O/VCC, low-level trigger, active or passive unknown (IMG_1114)
+- Small speaker, 8 ohm 1 W (IMG_1107)
+- Micro SD card module, SPI (IMG_1107)
+
+POWER
+- XL6009 boost modules, step up only, 1 to 3 (IMG_1071, 1076, 1080)
+- DC-DC module in antistatic bag, marked TU-SY-8, unidentified ? (IMG_1065)
+- TP4056-type USB charger board, 1 (IMG_1080)
+- Battery protection boards, 2 (IMG_1080)
+- 14500 3.7 V lithium cells, 2 (IMG_1072)
+- 18650 battery holders, 2, with an UltraFire cell, on the Mega build (IMG_1087)
+- 2-cell battery holder with wires, looks like AA ? (IMG_1063)
+- 5 V 5 A adapter, notebook-style brick, 5.5/2.1 mm barrel plug, 1, found by the user on 2026-11-16, output 5 V 5 A read from the label (no photo). Main power supply.
+- DC barrel plug (male) with screw terminals, 1 (IMG_1107). It plugs into a socket, so it can't receive an adapter's plug.
+
+OTHER ELECTRONICS
+- Relay module, 5 V, 1 channel (IMG_1079)
+- Fixed resistors, metal film, large assortment on labelled tapes, one tape marked 51K (IMG_1108)
+- BC547C NPN bipolar transistors (TO-92), about 15, confirmed by the user on 2026-11-13 (IMG_1107)
+- nRF24L01 radio module, 1 (IMG_1080)
+- Multi-turn trimmers, blue, about 10 (IMG_1078)
+- Electrolytic capacitor, 1, value not visible (IMG_1073)
+
+BUILD MATERIALS
+- Plastic gears, pulleys, rack and rubber belts, 1 bag (IMG_1066)
+- Screw terminal strip, 6-way (IMG_1077)
+- Perfboard, double-sided, about 3 x 7 cm (IMG_1059)
+- Header pins, jumper wire (IMG_1075)
+- Breadboard, seen in the background of IMG_1085 ?
+
+- Corrugated cardboard sheets, single-wall 3 mm, 1200 x 800 mm, several, bought by the user on 2026-11-16 (no photo). Base box, deck and scenery.
+
+ORDERED
+- Bookbinding board (introligatorska), A5, 1.5 mm, 20 sheets (user, 2026-11-17). Building walls and roofs.
+- Capsule slip ring with mounting flange, GOCO SRC-22 series, 6 wires (slipring.png, shop image)
+
+NOT SEEN IN THE PHOTOS
+- LDR light sensor
+- 1000 uF and 470 uF capacitors, fuse holder
+- Hook-up wire

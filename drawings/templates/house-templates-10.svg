@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297">
+<style>
+.cut{fill:#fff;stroke:#000;stroke-width:.35}
+.hole{fill:#cfd8e6;stroke:#000;stroke-width:.3}
+.fold{fill:none;stroke:#1a5fb4;stroke-width:.3;stroke-dasharray:2 1.2}
+.mark{fill:none;stroke:#888;stroke-width:.3;stroke-dasharray:.6 .8}
+.dim{fill:none;stroke:#c01c28;stroke-width:.22}
+text{font-family:Arial,Helvetica,sans-serif;fill:#222}
+.dt{font-size:2.9px;fill:#c01c28}
+.nm{font-size:3.4px;font-weight:bold}
+.ct{font-weight:normal;fill:#555}
+.nt{font-size:2.7px;fill:#444}
+.h1{font-size:5px;font-weight:bold}
+.lg{font-size:2.8px;fill:#444}
+</style>
+<rect width="210" height="297" fill="#fff"/>
+<text class="h1" x="12" y="16">Lantern Square house templates: Bakery</text>
+<text class="lg" x="198" y="16" text-anchor="end">page 10 of 15</text>
+<text class="lg" x="12" y="22.5">Print at 100 % (actual size). All sizes in cm. Board 1.5 mm, corrugated 3 mm (cut walls with the flutes upright).</text>
+<path class="cut" d="M12 26 h12"/><text class="lg" x="26" y="27">cut</text>
+<path class="hole" d="M36 24.6 h6 v3 h-6 Z"/><text class="lg" x="44" y="27">cut out (window)</text>
+<path class="fold" d="M70 26 h12"/><text class="lg" x="84" y="27">fold or score</text>
+<path class="mark" d="M106 26 h12"/><text class="lg" x="120" y="27">mark only</text>
+<path class="dim" d="M148 26 h50 M148 24.5 v3 M198 24.5 v3"/>
+<text class="dt" x="173" y="24" text-anchor="middle">check: 5.0 cm</text>
+<text class="nm" x="23" y="39">Bakery side wall<tspan class="ct"> · cut 2 · corrugated 3 mm</tspan></text>
+<path class="cut" d="M23 143 L108.5 143 L108.5 43 L23 43 Z"/>
+<path class="dim" d="M23 150.0 H108.5 M23 148.5 v3 M108.5 148.5 v3"/>
+<text class="dt" x="65.75" y="153.6" text-anchor="middle">8.55</text>
+<path class="dim" d="M16.0 143 V43 M14.5 143 h3 M14.5 43 h3"/>
+<text class="dt" x="14.6" y="93.0" text-anchor="middle" transform="rotate(-90 14.6 93.0)">10.0</text>
+<text class="nm" x="23" y="166.0">Bakery roof panel A<tspan class="ct"> · cut 1 · corrugated 3 mm</tspan></text>
+<path class="cut" d="M23 260.8 L129.0 260.8 L129.0 170.0 L23 170.0 Z"/>
+<path class="dim" d="M23 267.8 H129.0 M23 266.3 v3 M129.0 266.3 v3"/>
+<text class="dt" x="76.0" y="271.40000000000003" text-anchor="middle">10.6</text>
+<path class="dim" d="M16.0 260.8 V170.0 M14.5 260.8 h3 M14.5 170.0 h3"/>
+<text class="dt" x="14.6" y="215.4" text-anchor="middle" transform="rotate(-90 14.6 215.4)">9.08</text>
+<text class="nt" x="13" y="273.8">Long edge runs along the ridge. Pitch 41°.</text>
+<text class="nt" x="13" y="277.40000000000003">Flutes run down the slope. The wider panel overlaps the other at the ridge.</text>
+<text class="nm" x="129.5" y="39.0">Floor support<tspan class="ct"> · cut 2 · corrugated 3 mm</tspan></text>
+<path class="cut" d="M129.5 96.0 L139.5 96.0 L139.5 43.0 L129.5 43.0 Z"/>
+<path class="dim" d="M129.5 103.0 H139.5 M129.5 101.5 v3 M139.5 101.5 v3"/>
+<text class="dt" x="134.5" y="106.6" text-anchor="middle">1.0</text>
+<path class="dim" d="M122.5 96.0 V43.0 M121.0 96.0 h3 M121.0 43.0 h3"/>
+<text class="dt" x="121.1" y="69.5" text-anchor="middle" transform="rotate(-90 121.1 69.5)">5.3</text>
+<text class="nt" x="119.5" y="109.0">Glue in the back corners.</text>
+</svg>

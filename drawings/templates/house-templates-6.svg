@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297">
+<style>
+.cut{fill:#fff;stroke:#000;stroke-width:.35}
+.hole{fill:#cfd8e6;stroke:#000;stroke-width:.3}
+.fold{fill:none;stroke:#1a5fb4;stroke-width:.3;stroke-dasharray:2 1.2}
+.mark{fill:none;stroke:#888;stroke-width:.3;stroke-dasharray:.6 .8}
+.dim{fill:none;stroke:#c01c28;stroke-width:.22}
+text{font-family:Arial,Helvetica,sans-serif;fill:#222}
+.dt{font-size:2.9px;fill:#c01c28}
+.nm{font-size:3.4px;font-weight:bold}
+.ct{font-weight:normal;fill:#555}
+.nt{font-size:2.7px;fill:#444}
+.h1{font-size:5px;font-weight:bold}
+.lg{font-size:2.8px;fill:#444}
+</style>
+<rect width="210" height="297" fill="#fff"/>
+<text class="h1" x="12" y="16">Lantern Square house templates: Chapel</text>
+<text class="lg" x="198" y="16" text-anchor="end">page 6 of 15</text>
+<text class="lg" x="12" y="22.5">Print at 100 % (actual size). All sizes in cm. Board 1.5 mm, corrugated 3 mm (cut walls with the flutes upright).</text>
+<path class="cut" d="M12 26 h12"/><text class="lg" x="26" y="27">cut</text>
+<path class="hole" d="M36 24.6 h6 v3 h-6 Z"/><text class="lg" x="44" y="27">cut out (window)</text>
+<path class="fold" d="M70 26 h12"/><text class="lg" x="84" y="27">fold or score</text>
+<path class="mark" d="M106 26 h12"/><text class="lg" x="120" y="27">mark only</text>
+<path class="dim" d="M148 26 h50 M148 24.5 v3 M198 24.5 v3"/>
+<text class="dt" x="173" y="24" text-anchor="middle">check: 5.0 cm</text>
+<text class="nm" x="23" y="39">Chapel side wall, left<tspan class="ct"> · cut 1 · corrugated 3 mm</tspan></text>
+<path class="cut" d="M23 133 L137.0 133 L137.0 43 L23 43 Z"/>
+<path class="dim" d="M23 140.0 H137.0 M23 138.5 v3 M137.0 138.5 v3"/>
+<text class="dt" x="80.0" y="143.6" text-anchor="middle">11.4</text>
+<path class="dim" d="M16.0 133 V43 M14.5 133 h3 M14.5 43 h3"/>
+<text class="dt" x="14.6" y="88.0" text-anchor="middle" transform="rotate(-90 14.6 88.0)">9.0</text>
+<text class="nt" x="13" y="146">No windows.</text>
+<text class="nm" x="23" y="159.6">Chapel roof panel B<tspan class="ct"> · cut 1 · corrugated 3 mm</tspan></text>
+<path class="cut" d="M23 249.7 L151.0 249.7 L151.0 163.6 L23 163.6 Z"/>
+<path class="dim" d="M23 256.7 H151.0 M23 255.2 v3 M151.0 255.2 v3"/>
+<text class="dt" x="87.0" y="260.3" text-anchor="middle">12.8</text>
+<path class="dim" d="M16.0 249.7 V163.6 M14.5 249.7 h3 M14.5 163.6 h3"/>
+<text class="dt" x="14.6" y="206.64999999999998" text-anchor="middle" transform="rotate(-90 14.6 206.64999999999998)">8.61</text>
+<text class="nt" x="13" y="262.7">3 mm wider than panel A. Flutes run down the slope.</text>
+<text class="nt" x="13" y="266.3">No overhang at the front: ends flush with the front gable, where the tower stands.</text>
+</svg>

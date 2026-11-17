@@ -1,0 +1,1353 @@
+<title>Lantern Square</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@500;700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: the working model fills the first screen beside a kraft-card control box; the build notes read below it. Single night-time world. */
+:root{
+  color-scheme:dark;
+  --night:#0f1626; --night-2:#18223a; --line:#34415f;
+  --snow:#efeadf; --mute:#aab3c6;
+  --kraft:#c49a66; --kraft-2:#b48955; --kraft-ink:#2b1e10;
+  --ember:#ffbf69; --pine:#7cc0a6; --berry:#ef7663;
+  --display:"Grenze Gotisch","Palatino Linotype",Georgia,serif;
+  --body:"Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--night);color:var(--snow);font:400 1rem/1.6 var(--body)}
+.wrap{max-width:1260px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 64px;display:grid;gap:48px}
+header.top{display:flex;flex-wrap:wrap;gap:8px 32px;align-items:baseline;justify-content:space-between}
+h1{font:700 clamp(2.6rem,6vw,4rem)/1 var(--display);margin:0;color:var(--ember);letter-spacing:.005em}
+.lede{margin:0;max-width:62ch;color:var(--mute)}
+.hero{display:grid;gap:16px}
+
+.stage{display:grid;grid-template-columns:minmax(0,1fr) 316px;gap:16px;align-items:stretch}
+.viewer{position:relative;min-width:0;min-height:460px;background:#090e1a;overflow:hidden;border:1px solid var(--line)}
+#scene{position:absolute;inset:0}
+#scene canvas{display:block;width:100%;height:100%;outline:none;cursor:grab}
+#scene canvas:active{cursor:grabbing}
+#labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.tag3d{position:absolute;left:0;top:0;font:500 .72rem/1 var(--mono);background:rgba(9,14,26,.82);color:var(--snow);padding:4px 6px;white-space:nowrap;border-left:2px solid var(--ember);will-change:transform;transition:opacity .25s}
+.tag3d.under{border-left-color:var(--pine)}
+.zoom{position:absolute;right:calc(10px + env(safe-area-inset-right,0px));top:10px;display:grid;gap:4px}
+.zoom button{width:36px;height:36px;background:rgba(9,14,26,.82);border:1px solid var(--line);color:var(--snow);font:500 1.1rem/1 var(--mono);cursor:pointer}
+.hint{position:absolute;left:10px;bottom:8px;font:400 .72rem/1.2 var(--mono);color:var(--mute);pointer-events:none}
+#nogl{position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;color:var(--mute)}
+
+.box{background:var(--kraft);color:var(--kraft-ink);padding:16px;display:grid;gap:14px;align-content:start;background-image:repeating-linear-gradient(90deg,rgba(43,30,16,.045) 0 2px,transparent 2px 7px)}
+.box h2{font:700 1.5rem/1 var(--display);margin:0}
+.box h3{font:500 .68rem/1 var(--mono);text-transform:uppercase;letter-spacing:.1em;margin:0 0 6px}
+.rows{display:grid;gap:2px}
+.row{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:6px;align-items:center;font-size:.92rem;line-height:1.3;cursor:pointer;min-height:27px}
+.row input{width:16px;height:16px;margin:0;accent-color:var(--kraft-ink)}
+.row code,.field code{font:400 .68rem/1 var(--mono);opacity:.82}
+.field{display:grid;gap:3px;font-size:.92rem}
+.field .top-line{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.field select{font:inherit;font-size:.9rem;padding:4px;background:#e0c096;color:var(--kraft-ink);border:1px solid var(--kraft-ink);width:100%}
+.field input[type=range]{width:100%;accent-color:var(--kraft-ink);margin:0}
+.readout{font:400 .72rem/1.3 var(--mono);font-variant-numeric:tabular-nums}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.btn{font:700 .9rem/1.15 var(--body);padding:9px 8px;border:1.5px solid var(--kraft-ink);background:transparent;color:var(--kraft-ink);cursor:pointer}
+.btn:hover{background:rgba(43,30,16,.12)}
+.btn.primary{background:var(--kraft-ink);color:var(--ember);grid-column:1/-1}
+.btn.primary:hover{background:#40301c}
+.btn[aria-pressed=true]{background:var(--kraft-ink);color:var(--snow)}
+:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+.box :focus-visible{outline-color:var(--kraft-ink)}
+
+.phases{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;margin:0;padding:0;list-style:none}
+.phases button{width:100%;height:100%;text-align:left;background:var(--night-2);border:0;color:var(--snow);padding:9px 10px 12px;cursor:pointer;position:relative;display:grid;gap:2px;align-content:start}
+.phases b{font:700 1.15rem/1 var(--display)}
+.phases span{font-size:.76rem;line-height:1.3;color:var(--mute)}
+.phases button[aria-current=true]{background:#26324f}
+.phases button[aria-current=true] b{color:var(--ember)}
+.phases i{position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--ember)}
+
+.sec{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:16px 40px}
+.sec>h2{font:700 1.9rem/1.08 var(--display);margin:0;color:var(--snow);text-wrap:balance}
+.sec>div{display:grid;gap:16px;min-width:0}
+.sec p{margin:0;max-width:68ch}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.93rem;min-width:600px}
+th{font:500 .68rem/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mute);text-align:left;padding:6px 14px 6px 0;border-bottom:1px solid var(--line)}
+td{padding:9px 14px 9px 0;border-bottom:1px solid #243049;vertical-align:top;line-height:1.42}
+td code,p code,li code{font:400 .84em/1 var(--mono);color:var(--ember)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--mono);padding-right:0;padding-left:14px;white-space:nowrap}
+tr.pick td{background:#1d2a45}
+tr.pick td:first-child{box-shadow:inset 3px 0 0 var(--pine);padding-left:10px}
+tr.total td{font-weight:700;border-bottom:0}
+.chip{display:inline-block;font:500 .68rem/1 var(--mono);padding:3px 5px;background:var(--pine);color:#10241d;white-space:nowrap}
+.chip.no{background:transparent;color:var(--berry);box-shadow:inset 0 0 0 1px var(--berry)}
+.chip.so{background:transparent;color:var(--ember);box-shadow:inset 0 0 0 1px var(--ember)}
+.catch{background:var(--night-2);padding:14px 16px;max-width:74ch}
+.catch b{color:var(--ember)}
+ol.plain,ul.plain{margin:0;padding-left:1.2em;display:grid;gap:6px;max-width:68ch}
+svg.sect{display:block;width:100%;min-width:640px;height:auto}
+svg.tt{display:block;width:100%;min-width:760px;height:auto}
+svg text{font-family:var(--mono);font-size:12px;fill:var(--snow)}
+svg text.dim{fill:var(--mute)}
+svg text.r{fill:var(--berry)}
+svg text.h{font-weight:500;font-size:13px}
+svg.wiring{display:block;width:100%;min-width:860px;height:auto}
+svg.wiring .blk{fill:var(--night-2);stroke:var(--line)}
+svg.wiring .brd{fill:#1f3f6e;stroke:var(--line)}
+svg.wiring .res{fill:var(--night);stroke:var(--ember)}
+svg.wiring .p{fill:none;stroke:var(--berry);stroke-width:2}
+svg.wiring .n{fill:none;stroke:var(--mute);stroke-width:2}
+svg.wiring .s{fill:none;stroke:var(--ember);stroke-width:2}
+svg.wiring .i{fill:none;stroke:var(--pine);stroke-width:2}
+footer{color:var(--mute);font-size:.85rem}
+
+@media (max-width:980px){
+  .stage{grid-template-columns:minmax(0,1fr)}
+  .viewer{min-height:0;aspect-ratio:4/3.4}
+  .sec{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:560px){
+  .phases{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .phases span{display:none}
+  .phases b{font-size:1rem}
+  .phases button{padding:8px 6px 11px}
+}
+</style>
+
+<div class="wrap">
+  <section class="hero" aria-label="Interactive model">
+    <header class="top">
+      <h1>Lantern Square</h1>
+      <p class="lede">A 70 × 45 cm cardboard village with one Arduino Nano hidden under the deck. It wakes when the room goes dark and runs a five-part evening show.</p>
+    </header>
+
+    <div class="stage">
+      <div class="viewer">
+        <div id="scene"></div>
+        <div id="labels"></div>
+        <div class="zoom"><button id="zin" type="button" aria-label="Zoom in">+</button><button id="zout" type="button" aria-label="Zoom out">−</button></div>
+        <div class="hint">Drag to look around</div>
+        <div id="nogl" hidden>The 3D model needs WebGL, which this browser has turned off. The full build plan is below.</div>
+      </div>
+
+      <div class="box" aria-label="Control box">
+        <h2>Control box</h2>
+        <div class="acts">
+          <button class="btn primary" id="btnPlay" type="button">Play the evening show</button>
+          <button class="btn" id="btnSleigh" type="button">Launch sleigh</button>
+          <button class="btn" id="btnCarol" type="button">Ring the carol</button>
+          <button class="btn" id="btnXray" type="button" aria-pressed="false">See through the deck</button>
+          <button class="btn" id="btnOpen" type="button" aria-pressed="false">Lift the village</button>
+        </div>
+        <div>
+          <h3>Plain LEDs</h3>
+          <div class="rows">
+            <label class="row"><input type="checkbox" id="c_chapel"><span>Chapel stained glass</span><code>PCA 0–2</code></label>
+            <label class="row"><input type="checkbox" id="c_bakery"><span>Bakery windows</span><code>PCA 3–4</code></label>
+            <label class="row"><input type="checkbox" id="c_cottage"><span>Cottage windows</span><code>PCA 5</code></label>
+            <label class="row"><input type="checkbox" id="c_fire"><span>Cottage hearth flicker</span><code>PCA 6–7</code></label>
+            <label class="row"><input type="checkbox" id="c_lamps"><span>Street lamps</span><code>PCA 8</code></label>
+            <label class="row"><input type="checkbox" id="c_moon"><span>Moon and stars</span><code>PCA 9–10</code></label>
+          </div>
+        </div>
+        <div>
+          <h3>Addressable pixels</h3>
+          <div class="rows">
+            <label class="row"><input type="checkbox" id="c_river"><span>River ice, 4 px, steady blue</span><code>D6</code></label>
+            <label class="row"><input type="checkbox" id="c_tree"><span>Tree lights, 12 px</span><code>D7</code></label>
+          </div>
+          <label class="field"><span class="top-line"><span>String lights, 30 px, after the river</span><code>D6</code></span>
+            <select id="mode"><option value="off">Off</option><option value="steady">Steady warm</option><option value="twinkle">Twinkle</option><option value="chase">Chase</option></select>
+          </label>
+        </div>
+        <div>
+          <h3>Turntable</h3>
+          <label class="field"><span class="top-line"><span>Tree speed</span><code>D8–D11</code></span>
+            <input type="range" id="rpm" min="0" max="5" step="0.5" value="3" aria-label="Tree speed in turns per minute">
+          </label>
+          <div class="readout" id="rpmOut"></div>
+        </div>
+        <label class="row"><input type="checkbox" id="c_sound"><span>Hear the buzzer</span><code>D12</code></label>
+        <label class="row"><input type="checkbox" id="c_labels"><span>Show labels</span><code></code></label>
+        <label class="row"><input type="checkbox" id="c_wires"><span>Show wires and plugs</span><code>3D</code></label>
+      </div>
+    </div>
+
+    <ol class="phases" id="phases"></ol>
+  </section>
+
+  <section class="sec">
+    <h2>What sits on the board</h2>
+    <div>
+      <p>The base is a shallow box, 9 cm deep, with a removable cardboard deck on top. All the electronics stay in the box, so you can lift the deck for repairs. The sizes below match the model above.</p>
+      <div class="tw"><table>
+        <thead><tr><th>Element</th><th>How to make it</th><th>What it does</th><th>Driven by</th></tr></thead>
+        <tbody>
+          <tr><td>Chapel, 25 cm tall</td><td>Corrugated card, with bookbinding board for the window walls. Red, green and blue tissue behind the window cut-outs</td><td>Stained glass fades up, lit by your coloured LEDs. The bell swings during the carol</td><td>3 LED channels, 1 small servo</td></tr>
+          <tr><td>Bakery</td><td>Card walls, paper awning, tracing paper in the windows</td><td>Shop and upstairs windows light separately</td><td>2 LED channels</td></tr>
+          <tr><td>Cottage</td><td>Card walls, tracing paper, one amber hearth window</td><td>A red and a yellow LED flicker out of step, like a fire</td><td>3 LED channels</td></tr>
+          <tr><td>Rink and tree, 27 cm tall</td><td>22 cm card disc covered in foil, stacked card cones, paper skaters</td><td>Tree and skaters turn together. Tree lights twinkle while turning</td><td>Stepper motor, 12 pixels</td></tr>
+          <tr><td>String lights</td><td>Addressable string on thin wire, hung from two lamp posts and two house walls</td><td>Steady, twinkle or chase</td><td>30 pixels</td></tr>
+          <tr><td>Frozen river and bridge</td><td>4 cm slot in the deck along the foot of the front hills, its ends bending back behind the ridge. Frosted clear plastic over tracing paper, lit from a card trough below. Card footbridge from the rink path, its far end against the hills</td><td>Ice glows a steady blue from below</td><td>4 pixels, first on the string chain</td></tr>
+          <tr><td>Sledding children</td><td>Three card figures on the front hill above the river: one sliding down, one at the top with a sled, one pulling a sled back up. A white sled run with tracks ends at the river bank</td><td>Static, lit by the river's glow</td><td>None</td></tr>
+          <tr><td>Snowman, about 6.5 cm tall</td><td>Three polystyrene or cotton-wool balls on a toothpick, card hat, black pinhead eyes, orange card nose, red felt scarf, twig arms. Stands in the open snow in front of the bakery</td><td>Static, lit by the bakery window and street lamp</td><td>None</td></tr>
+          <tr><td>Sleigh</td><td>Card cut-out on a light 28 cm skewer arm, hidden behind the hills</td><td>Rises from the left hill, crosses the sky, drops behind the right hill</td><td>1 small servo</td></tr>
+          <tr><td>Moon and hills</td><td>Backdrop board with a tracing-paper moon. Pinholes for stars, with blue LEDs behind</td><td>Moon glows from behind. Dips while the sleigh goes back</td><td>2 LED channels</td></tr>
+          <tr><td>Guest button and light sensor</td><td>Button on the front wall, light sensor on the deck</td><td>Dark room starts the show. The button plays the carol</td><td>2 inputs</td></tr>
+        </tbody>
+      </table></div>
+      <p>The servo idea from your brief suits the sleigh well, because a 180° sweep is exactly the arc it needs. A hinge pin at the sleigh keeps it level by gravity. One limit: the arm has to come back the same way, and the sleigh would fly backwards. The show hides this by dimming the moon and returning the arm quickly.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>Turning the tree</h2>
+    <div>
+      <p>A standard servo stops at 180°, so it can't turn the tree. The tree needs a slow, steady motor, and I recommend the small geared stepper. It is quiet, cheap and controllable, and its top speed of about 15 rpm is well within what this needs.</p>
+      <div class="tw"><table>
+        <thead><tr><th>Motor</th><th>Full turns</th><th>Slow and smooth</th><th>Exact position</th><th>Verdict</th></tr></thead>
+        <tbody>
+          <tr><td>Standard servo, SG90</td><td>No, 180° only</td><td>Yes</td><td>Yes</td><td><span class="chip no">Use for sleigh and bell</span></td></tr>
+          <tr><td>Continuous-rotation servo, FS90R type</td><td>Yes</td><td>Fair, hard to run very slowly</td><td>No</td><td><span class="chip so">Works as a fallback</span></td></tr>
+          <tr><td>Small DC gear motor</td><td>Yes</td><td>Fair, noisier</td><td>No</td><td><span class="chip so">Needs a transistor or driver</span></td></tr>
+          <tr class="pick"><td>Geared stepper, 28BYJ-48 with ULN2003 board</td><td>Yes</td><td>Yes</td><td>Yes</td><td><span class="chip">Recommended</span></td></tr>
+        </tbody>
+      </table></div>
+      <div class="tw">
+<svg class="tt" viewBox="0 0 1110 650" role="img" aria-label="Cross-section of the turntable. A paper tree stands on a 22 cm rink disc that sits flush in a hole in the deck. A flange coupling joins the disc to an 8 mm brass tube carrying the tree wires. The tube runs through two KFL08 flange bearings on a plywood drive plate. A 60-tooth pulley on the tube is driven by a GT2 belt from a 20-tooth pulley on the 28BYJ-48 stepper beside it, a 3 to 1 reduction. Below the plate, a silicone hose joins the tube to the slip ring rotor. The slip ring body is screwed to the base floor and its six wires run to the Nano and power rail.">
+<style>
+.tt-card{fill:#c49a66;stroke:#8c6a42}.tt-wood{fill:#b5844f;stroke:#7d5a33}.tt-foam{fill:#6b7894}
+.tt-zinc{fill:#9aa3b2;stroke:#5d6576}.tt-ball{fill:#e4e8ef;stroke:#5d6576}.tt-bolt{fill:#3b4150}
+.tt-ring{fill:#2a2d36;stroke:#8d97ab}.tt-in{font:600 11px "IBM Plex Mono",monospace;fill:#efeadf}
+.tt-tube{fill:#d8b65a;stroke:#8a7030}.tt-bore{fill:#141a28}.tt-hose{fill:#7cc0a6;fill-opacity:.55;stroke:#7cc0a6}
+.tt-alu{fill:#c9d0da;stroke:#6f7889}.tt-motor{fill:#b9c0cb;stroke:#6f7889}.tt-cap{fill:#3a68b5;stroke:#24467f}
+.tt-shaft{fill:#e4e8ef;stroke:#6f7889}.tt-rub{fill:#1a1a20}.tt-belt{fill:#2b2f3a;stroke:#efeadf;stroke-width:1}
+.tt-strand{fill:#2b2f3a;stroke:#efeadf;stroke-width:1;stroke-dasharray:5 3}
+.tt-deck{fill:#efeadf;stroke:#a89c86}.tt-disc{fill:#c3d6ea;stroke:#7d93ad}.tt-trunk{fill:#8c6a42}
+.tt-tree{fill:#2f6650;stroke:#244f3e}.tt-break{fill:none;stroke:#efeadf;stroke-width:2}
+.tt-led0{fill:#ffbf69}.tt-led1{fill:#ef7663}.tt-led2{fill:#8fd0ff}
+.tt-wr{stroke:#ef7663;stroke-width:1.6;fill:none}.tt-wk{stroke:#aab3c6;stroke-width:1.6;fill:none}.tt-wy{stroke:#ffbf69;stroke-width:1.6;fill:none}
+.tt-lead{stroke:#efeadf;stroke-width:1;opacity:.8}.tt-dot{fill:#efeadf}
+.tt-bub{fill:#ffbf69}.tt-n{font:700 11px "IBM Plex Mono",monospace;fill:#2b1e10}
+.tt-h{font:700 20px "Grenze Gotisch",Georgia,serif;fill:#ffbf69}.tt-k{font:400 13px "Atkinson Hyperlegible",system-ui,sans-serif;fill:#efeadf}
+.tt-note{font:400 12px "IBM Plex Mono",monospace;fill:#aab3c6}
+</style>
+<rect class="tt-card" x="62" y="560" width="676" height="13.0"/>
+<rect class="tt-foam" x="231.0" y="552.2" width="39.0" height="7.8"/>
+<rect class="tt-wood" x="231.0" y="463.8" width="39.0" height="88.4"/>
+<rect class="tt-foam" x="608.0" y="552.2" width="39.0" height="7.8"/>
+<rect class="tt-wood" x="608.0" y="463.8" width="39.0" height="88.4"/>
+<rect class="tt-wood" x="218" y="448.2" width="170.3" height="15.6"/>
+<rect class="tt-wood" x="411.7" y="448.2" width="235.3" height="15.6"/>
+<rect class="tt-zinc" x="337.6" y="440.4" width="124.8" height="7.8"/>
+<rect class="tt-zinc" x="371.4" y="419.6" width="57.2" height="20.8"/>
+<circle class="tt-ball" cx="380.5" cy="430.0" r="5.72"/>
+<circle class="tt-ball" cx="419.5" cy="430.0" r="5.72"/>
+<rect class="tt-bolt" x="347.5" y="440.4" width="6.2" height="23.4"/>
+<rect class="tt-bolt" x="446.3" y="440.4" width="6.2" height="23.4"/>
+<rect class="tt-zinc" x="337.6" y="463.8" width="124.8" height="7.8"/>
+<rect class="tt-zinc" x="371.4" y="471.6" width="57.2" height="20.8"/>
+<circle class="tt-ball" cx="380.5" cy="482.0" r="5.72"/>
+<circle class="tt-ball" cx="419.5" cy="482.0" r="5.72"/>
+<rect class="tt-bolt" x="347.5" y="448.2" width="6.2" height="23.4"/>
+<rect class="tt-bolt" x="446.3" y="448.2" width="6.2" height="23.4"/>
+<rect class="tt-ring" x="342.8" y="552.2" width="114.4" height="7.8"/>
+<rect class="tt-ring" x="371.4" y="515.8" width="57.2" height="36.4"/>
+<rect class="tt-ring" x="387.0" y="500.2" width="26.0" height="15.6"/>
+<rect class="tt-bolt" x="353.2" y="552.2" width="5.2" height="18.2"/>
+<rect class="tt-bolt" x="441.6" y="552.2" width="5.2" height="18.2"/>
+<path class="tt-wr" d="M428.6 534.0 C478 534.0,504 541.8,571.6 541.8"/>
+<path class="tt-wk" d="M428.6 537.9 C478 537.9,504 545.7,571.6 545.7"/>
+<path class="tt-wy" d="M428.6 530.1 C478 530.1,504 537.9,571.6 537.9"/>
+<rect class="tt-tube" x="389.6" y="339.0" width="20.8" height="158.6"/>
+<rect class="tt-bore" x="392.7" y="339.0" width="14.6" height="158.6"/>
+<line class="tt-wr" x1="396.6" y1="502.8" x2="396.6" y2="310.4"/>
+<line class="tt-wk" x1="400" y1="502.8" x2="400" y2="310.4"/>
+<line class="tt-wy" x1="403.4" y1="502.8" x2="403.4" y2="310.4"/>
+<rect class="tt-hose" x="383.9" y="483.3" width="32.2" height="28.6"/>
+<rect class="tt-alu" x="371.4" y="389.7" width="57.2" height="14.3"/>
+<rect class="tt-alu" x="350.6" y="372.8" width="98.8" height="15.6"/>
+<rect class="tt-alu" x="345.4" y="388.4" width="109.2" height="2.6"/>
+<rect class="tt-alu" x="345.4" y="370.2" width="109.2" height="2.6"/>
+<rect class="tt-bolt" x="371.4" y="393.6" width="5.2" height="6.5"/>
+<rect class="tt-rub" x="516.0" y="443.0" width="15.6" height="5.2"/>
+<rect class="tt-zinc" x="519.9" y="398.8" width="7.8" height="44.2"/>
+<rect class="tt-rub" x="614.8" y="443.0" width="15.6" height="5.2"/>
+<rect class="tt-zinc" x="618.7" y="398.8" width="7.8" height="44.2"/>
+<rect class="tt-motor" x="536.8" y="396.2" width="72.8" height="44.2" rx="6"/>
+<rect class="tt-cap" x="609.6" y="404.0" width="11.4" height="31.2"/>
+<rect class="tt-zinc" x="518.6" y="395.7" width="109.2" height="3.1"/>
+<rect class="tt-zinc" x="540.7" y="392.3" width="23.4" height="3.9"/>
+<rect class="tt-shaft" x="545.9" y="357.2" width="13.0" height="35.1"/>
+<rect class="tt-alu" x="535.7" y="372.8" width="33.3" height="15.6"/>
+<rect class="tt-alu" x="531.6" y="388.4" width="41.6" height="2.6"/>
+<rect class="tt-alu" x="531.6" y="370.2" width="41.6" height="2.6"/>
+<rect class="tt-alu" x="532.9" y="357.2" width="39.0" height="13.0"/>
+<text class="tt-in" x="573.2" y="422.2" text-anchor="middle">28BYJ-48</text>
+<rect class="tt-belt" x="346.7" y="373.3" width="3.9" height="14.6"/>
+<rect class="tt-belt" x="569.0" y="373.3" width="3.9" height="14.6"/>
+<rect class="tt-strand" x="449.4" y="373.3" width="86.3" height="14.6"/>
+<rect class="tt-alu" x="381.8" y="349.4" width="36.4" height="15.6"/>
+<rect class="tt-alu" x="358.4" y="339.0" width="83.2" height="10.4"/>
+<rect class="tt-bolt" x="366.2" y="326.0" width="5.2" height="23.4"/>
+<rect class="tt-bolt" x="428.6" y="326.0" width="5.2" height="23.4"/>
+<rect class="tt-deck" x="62" y="326.0" width="45.5" height="13.0"/>
+<rect class="tt-deck" x="692.5" y="326.0" width="45.5" height="13.0"/>
+<rect class="tt-disc" x="114" y="326.0" width="572" height="13.0"/>
+<rect class="tt-trunk" x="376.6" y="274" width="46.8" height="52.0"/>
+<polygon class="tt-tree" points="186.8,274 613.2,274 539.9,131.0 260.1,131.0"/>
+<polyline class="tt-break" points="249.7,137.5 279.8,124.5 309.8,137.5 339.9,124.5 369.9,137.5 400.0,124.5 430.1,137.5 460.1,124.5 490.2,137.5 520.2,124.5 550.3,137.5"/>
+<circle class="tt-led0" cx="257.0" cy="242.8" r="5.72"/>
+<circle class="tt-led1" cx="348" cy="206.4" r="5.72"/>
+<circle class="tt-led2" cx="483.2" cy="232.4" r="5.72"/>
+<circle class="tt-led0" cx="561.2" cy="258.4" r="5.72"/>
+<circle class="tt-led1" cx="285.6" cy="159.6" r="5.72"/>
+<circle class="tt-led2" cx="436.4" cy="154.4" r="5.72"/>
+<circle class="tt-led0" cx="223.2" cy="261.0" r="5.72"/>
+<line class="tt-wy" x1="403.4" y1="310.4" x2="403.4" y2="284.4"/>
+<line class="tt-lead" x1="127.0" y1="216.8" x2="202.4" y2="216.8"/>
+<circle class="tt-dot" cx="202.4" cy="216.8" r="2.2"/>
+<line class="tt-lead" x1="155.6" y1="292.2" x2="155.6" y2="326.0"/>
+<circle class="tt-dot" cx="155.6" cy="326.0" r="2.2"/>
+<line class="tt-lead" x1="82.8" y1="292.2" x2="82.8" y2="326.0"/>
+<circle class="tt-dot" cx="82.8" cy="326.0" r="2.2"/>
+<line class="tt-lead" x1="231.0" y1="350.7" x2="358.4" y2="344.2"/>
+<circle class="tt-dot" cx="358.4" cy="344.2" r="2.2"/>
+<line class="tt-lead" x1="231.0" y1="410.5" x2="389.6" y2="410.5"/>
+<circle class="tt-dot" cx="389.6" cy="410.5" r="2.2"/>
+<line class="tt-lead" x1="231.0" y1="380.6" x2="345.4" y2="380.6"/>
+<circle class="tt-dot" cx="345.4" cy="380.6" r="2.2"/>
+<line class="tt-lead" x1="488.4" y1="355.9" x2="488.4" y2="373.3"/>
+<circle class="tt-dot" cx="488.4" cy="373.3" r="2.2"/>
+<line class="tt-lead" x1="691.2" y1="363.7" x2="573.2" y2="363.7"/>
+<circle class="tt-dot" cx="573.2" cy="363.7" r="2.2"/>
+<line class="tt-lead" x1="691.2" y1="414.4" x2="621.0" y2="414.4"/>
+<circle class="tt-dot" cx="621.0" cy="414.4" r="2.2"/>
+<line class="tt-lead" x1="691.2" y1="445.6" x2="630.4" y2="445.6"/>
+<circle class="tt-dot" cx="630.4" cy="445.6" r="2.2"/>
+<line class="tt-lead" x1="231.0" y1="431.3" x2="371.4" y2="431.3"/>
+<circle class="tt-dot" cx="371.4" cy="431.3" r="2.2"/>
+<line class="tt-lead" x1="176.4" y1="482.0" x2="218.0" y2="458.6"/>
+<circle class="tt-dot" cx="218.0" cy="458.6" r="2.2"/>
+<line class="tt-lead" x1="303.8" y1="482.0" x2="371.4" y2="482.0"/>
+<circle class="tt-dot" cx="371.4" cy="482.0" r="2.2"/>
+<line class="tt-lead" x1="303.8" y1="504.1" x2="383.9" y2="497.6"/>
+<circle class="tt-dot" cx="383.9" cy="497.6" r="2.2"/>
+<line class="tt-lead" x1="467.6" y1="492.4" x2="413.0" y2="508.0"/>
+<circle class="tt-dot" cx="413.0" cy="508.0" r="2.2"/>
+<line class="tt-lead" x1="303.8" y1="536.6" x2="371.4" y2="536.6"/>
+<circle class="tt-dot" cx="371.4" cy="536.6" r="2.2"/>
+<line class="tt-lead" x1="691.2" y1="502.8" x2="647.0" y2="502.8"/>
+<circle class="tt-dot" cx="647.0" cy="502.8" r="2.2"/>
+<line class="tt-lead" x1="108.8" y1="592.5" x2="108.8" y2="573.0"/>
+<circle class="tt-dot" cx="108.8" cy="573.0" r="2.2"/>
+<line class="tt-lead" x1="597.6" y1="518.4" x2="571.6" y2="537.9"/>
+<circle class="tt-dot" cx="571.6" cy="537.9" r="2.2"/>
+<circle class="tt-bub" cx="127.0" cy="216.8" r="10"/><text class="tt-n" x="127.0" y="220.8" text-anchor="middle">1</text>
+<circle class="tt-bub" cx="155.6" cy="292.2" r="10"/><text class="tt-n" x="155.6" y="296.2" text-anchor="middle">2</text>
+<circle class="tt-bub" cx="82.8" cy="292.2" r="10"/><text class="tt-n" x="82.8" y="296.2" text-anchor="middle">3</text>
+<circle class="tt-bub" cx="231.0" cy="350.7" r="10"/><text class="tt-n" x="231.0" y="354.7" text-anchor="middle">4</text>
+<circle class="tt-bub" cx="231.0" cy="410.5" r="10"/><text class="tt-n" x="231.0" y="414.5" text-anchor="middle">5</text>
+<circle class="tt-bub" cx="231.0" cy="380.6" r="10"/><text class="tt-n" x="231.0" y="384.6" text-anchor="middle">6</text>
+<circle class="tt-bub" cx="488.4" cy="355.9" r="10"/><text class="tt-n" x="488.4" y="359.9" text-anchor="middle">7</text>
+<circle class="tt-bub" cx="691.2" cy="363.7" r="10"/><text class="tt-n" x="691.2" y="367.7" text-anchor="middle">8</text>
+<circle class="tt-bub" cx="691.2" cy="414.4" r="10"/><text class="tt-n" x="691.2" y="418.4" text-anchor="middle">9</text>
+<circle class="tt-bub" cx="691.2" cy="445.6" r="10"/><text class="tt-n" x="691.2" y="449.6" text-anchor="middle">10</text>
+<circle class="tt-bub" cx="231.0" cy="431.3" r="10"/><text class="tt-n" x="231.0" y="435.3" text-anchor="middle">11</text>
+<circle class="tt-bub" cx="176.4" cy="482.0" r="10"/><text class="tt-n" x="176.4" y="486.0" text-anchor="middle">12</text>
+<circle class="tt-bub" cx="303.8" cy="482.0" r="10"/><text class="tt-n" x="303.8" y="486.0" text-anchor="middle">13</text>
+<circle class="tt-bub" cx="303.8" cy="504.1" r="10"/><text class="tt-n" x="303.8" y="508.1" text-anchor="middle">14</text>
+<circle class="tt-bub" cx="467.6" cy="492.4" r="10"/><text class="tt-n" x="467.6" y="496.4" text-anchor="middle">15</text>
+<circle class="tt-bub" cx="303.8" cy="536.6" r="10"/><text class="tt-n" x="303.8" y="540.6" text-anchor="middle">16</text>
+<circle class="tt-bub" cx="691.2" cy="502.8" r="10"/><text class="tt-n" x="691.2" y="506.8" text-anchor="middle">17</text>
+<circle class="tt-bub" cx="108.8" cy="592.5" r="10"/><text class="tt-n" x="108.8" y="596.5" text-anchor="middle">18</text>
+<circle class="tt-bub" cx="597.6" cy="518.4" r="10"/><text class="tt-n" x="597.6" y="522.4" text-anchor="middle">19</text>
+<text class="tt-h" x="770" y="42">Parts</text>
+<circle class="tt-bub" cx="780" cy="66" r="10"/><text class="tt-n" x="780" y="70" text-anchor="middle">1</text><text class="tt-k" x="798" y="70">Paper tree with LEDs (cut short here)</text>
+<circle class="tt-bub" cx="780" cy="91" r="10"/><text class="tt-n" x="780" y="95" text-anchor="middle">2</text><text class="tt-k" x="798" y="95">Rink disc, 22 cm, foil covered</text>
+<circle class="tt-bub" cx="780" cy="116" r="10"/><text class="tt-n" x="780" y="120" text-anchor="middle">3</text><text class="tt-k" x="798" y="120">Deck, lifts off over the disc</text>
+<circle class="tt-bub" cx="780" cy="141" r="10"/><text class="tt-n" x="780" y="145" text-anchor="middle">4</text><text class="tt-k" x="798" y="145">8 mm flange coupling, screwed to the disc</text>
+<circle class="tt-bub" cx="780" cy="166" r="10"/><text class="tt-n" x="780" y="170" text-anchor="middle">5</text><text class="tt-k" x="798" y="170">8 mm brass tube, tree wires inside</text>
+<circle class="tt-bub" cx="780" cy="191" r="10"/><text class="tt-n" x="780" y="195" text-anchor="middle">6</text><text class="tt-k" x="798" y="195">GT2 pulley, 60 teeth</text>
+<circle class="tt-bub" cx="780" cy="216" r="10"/><text class="tt-n" x="780" y="220" text-anchor="middle">7</text><text class="tt-k" x="798" y="220">GT2 belt, 200 mm, 3:1</text>
+<circle class="tt-bub" cx="780" cy="241" r="10"/><text class="tt-n" x="780" y="245" text-anchor="middle">8</text><text class="tt-k" x="798" y="245">GT2 pulley, 20 teeth</text>
+<circle class="tt-bub" cx="780" cy="266" r="10"/><text class="tt-n" x="780" y="270" text-anchor="middle">9</text><text class="tt-k" x="798" y="270">28BYJ-48 stepper motor</text>
+<circle class="tt-bub" cx="780" cy="291" r="10"/><text class="tt-n" x="780" y="295" text-anchor="middle">10</text><text class="tt-k" x="798" y="295">Rubber washers on standoffs</text>
+<circle class="tt-bub" cx="780" cy="316" r="10"/><text class="tt-n" x="780" y="320" text-anchor="middle">11</text><text class="tt-k" x="798" y="320">Upper KFL08 flange bearing</text>
+<circle class="tt-bub" cx="780" cy="341" r="10"/><text class="tt-n" x="780" y="345" text-anchor="middle">12</text><text class="tt-k" x="798" y="345">Drive plate, 6 mm plywood</text>
+<circle class="tt-bub" cx="780" cy="366" r="10"/><text class="tt-n" x="780" y="370" text-anchor="middle">13</text><text class="tt-k" x="798" y="370">Lower KFL08 flange bearing</text>
+<circle class="tt-bub" cx="780" cy="391" r="10"/><text class="tt-n" x="780" y="395" text-anchor="middle">14</text><text class="tt-k" x="798" y="395">Silicone hose, flexible joint</text>
+<circle class="tt-bub" cx="780" cy="416" r="10"/><text class="tt-n" x="780" y="420" text-anchor="middle">15</text><text class="tt-k" x="798" y="420">Slip ring rotor, turns with tree</text>
+<circle class="tt-bub" cx="780" cy="441" r="10"/><text class="tt-n" x="780" y="445" text-anchor="middle">16</text><text class="tt-k" x="798" y="445">Slip ring body and flange, fixed</text>
+<circle class="tt-bub" cx="780" cy="466" r="10"/><text class="tt-n" x="780" y="470" text-anchor="middle">17</text><text class="tt-k" x="798" y="470">Wooden block on foam</text>
+<circle class="tt-bub" cx="780" cy="491" r="10"/><text class="tt-n" x="780" y="495" text-anchor="middle">18</text><text class="tt-k" x="798" y="495">Base floor</text>
+<circle class="tt-bub" cx="780" cy="516" r="10"/><text class="tt-n" x="780" y="520" text-anchor="middle">19</text><text class="tt-k" x="798" y="520">6 wires to Nano, 5V and GND</text>
+<text class="tt-note" x="770" y="557">Heights from the floor: plate 4.3 cm,</text>
+<text class="tt-note" x="770" y="577">belt 6.9 cm, deck 9.0 cm.</text>
+<text class="tt-note" x="770" y="597">Axle to motor shaft: 58.6 mm.</text>
+<text class="tt-note" x="770" y="617">Section through the axle, roughly to scale.</text>
+<text class="tt-note" x="770" y="637">Heights change once the slip ring is measured.</text>
+</svg>
+      </div>
+      <p><b>How it works.</b> The stepper sits beside the axle and drives it through a toothed GT2 belt at 3:1, so the tree turns at about 3 rpm while the motor runs at 9. Two flange bearings on one plywood plate keep the 22 cm disc from tilting. The slip ring under the plate carries 5 V, ground and data to the tree lights while it turns, and the bearings carry all the weight.</p>
+      <p>The rink disc sits flush in a round hole in the deck, so the deck lifts off without taking the drive apart. Part sizes and the assembly order are in <code>docs/06-turntable.md</code> in the project folder.</p>
+      <p>Put rubber washers under the motor and foam under the plate blocks. A cardboard box acts like a speaker cone and amplifies motor hum.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>Pin plan for one Nano</h2>
+    <div>
+      <p class="catch"><b>The Nano is short of dimmable pins.</b> It has six PWM pins, but the Servo library takes D9 and D10, and <code>tone()</code> takes D3 and D11. That leaves only D5 and D6 for fading. A PCA9685 board fixes this with 16 dimmable outputs on two wires, and it also runs the servos in hardware. Servos normally jitter while addressable LEDs update, and this avoids that too.</p>
+      <div class="tw"><table>
+        <thead><tr><th>Pin</th><th>Job</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td><code>A4, A5</code></td><td>I²C to the PCA9685</td><td>Carries 11 LED channels and 2 servos, with 3 outputs spare</td></tr>
+          <tr><td><code>D6</code></td><td>River ice, then string lights</td><td>330 Ω resistor in the data line. One chain: 4 river pixels, then 30 string pixels</td></tr>
+          <tr><td><code>D7</code></td><td>Tree lights data</td><td>Separate chain, through the slip ring</td></tr>
+          <tr><td><code>D8–D11</code></td><td>Stepper IN1–IN4</td><td>Through the ULN2003 board</td></tr>
+          <tr><td><code>D12</code></td><td>Buzzer</td><td>Plays carols with <code>tone()</code> if it is a passive type. See the check under Circuit</td></tr>
+          <tr><td><code>D2</code></td><td>Guest button</td><td>Uses the internal pull-up</td></tr>
+          <tr><td><code>A0</code></td><td>Light sensor</td><td>LDR with a 10 kΩ divider</td></tr>
+          <tr><td><code>D3–D5, D13, A1–A3</code></td><td>Spare</td><td>Room for a second button, a sound module or a small extra mechanism</td></tr>
+        </tbody>
+      </table></div>
+      <p><b>One Nano runs the whole plan.</b> If the stepper ticks when the LEDs update, a second Nano can take over the pixels and receive simple commands over serial. Add it only if that happens.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>Circuit</h2>
+    <div>
+      <p>Red tags and the words 5V or GND on a block mean that wire goes to the rail at the top. Drawing each one would hide the signals, so only the signal wires are shown.</p>
+      <div class="tw">
+        <svg class="wiring" viewBox="0 0 1000 570" role="img" aria-label="Wiring diagram. A 5 volt adapter feeds, through a rocker switch, a fused rail with a 1000 microfarad capacitor. The Nano joins the rail through a removable link. The Nano connects to a button, light sensor and buzzer on the left. On the right it connects to the PCA9685 board, the string lights, the tree lights through a slip ring, and the ULN2003 stepper board.">
+          <rect class="blk" x="20" y="24" width="130" height="52"/>
+          <text x="85" y="47" text-anchor="middle" class="h">Wall adapter</text><text x="85" y="64" text-anchor="middle" class="dim">5 V, 3 A</text>
+          <path class="p" d="M150 38 H160 M222 38 H236 M306 38 H960"/><path class="n" d="M150 62 H960"/>
+          <rect class="res" x="160" y="26" width="62" height="24"/><text x="191" y="42" text-anchor="middle">Switch</text>
+          <rect class="res" x="236" y="26" width="70" height="24"/><text x="271" y="42" text-anchor="middle">3 A fuse</text>
+          <rect class="res" x="500" y="28" width="110" height="44"/><text x="555" y="46" text-anchor="middle">C1 1000 µF</text><text x="555" y="63" text-anchor="middle" class="dim">across rail</text>
+          <text x="640" y="30" class="r">5V rail</text><text x="640" y="80" class="dim">GND rail</text>
+          <path class="p" d="M340 38 V84 M340 106 V130"/><path class="n" d="M420 62 V130"/>
+          <rect class="res" x="322" y="84" width="36" height="22"/><text x="340" y="99" text-anchor="middle">J1</text>
+          <circle cx="340" cy="38" r="4" fill="#ef7663"/><circle cx="420" cy="62" r="4" fill="#aab3c6"/>
+
+          <rect class="brd" x="300" y="130" width="160" height="420"/>
+          <text x="340" y="148" text-anchor="middle">5V</text><text x="420" y="148" text-anchor="middle">GND</text>
+          <text x="380" y="530" text-anchor="middle" class="h">Arduino Nano</text>
+          <text x="308" y="196">D2</text><text x="308" y="300">A0</text><text x="308" y="406">D12</text>
+          <g text-anchor="end"><text x="452" y="184">A4</text><text x="452" y="209">A5</text><text x="452" y="324">D6</text><text x="452" y="394">D7</text><text x="452" y="474">D8–D11</text></g>
+
+          <rect class="blk" x="30" y="170" width="150" height="44"/><text x="40" y="189" class="h">Guest button</text><text x="40" y="206" class="dim">other leg: GND</text>
+          <path class="i" d="M180 192 H300"/>
+          <rect class="blk" x="30" y="260" width="150" height="72"/><text x="40" y="279" class="h">Light sensor</text><text x="40" y="299" class="r">5V to LDR to A0</text><text x="40" y="319" class="dim">A0, 10 kΩ, GND</text>
+          <path class="i" d="M180 296 H300"/>
+          <rect class="blk" x="30" y="380" width="150" height="44"/><text x="40" y="399" class="h">Buzzer</text><text x="40" y="416" class="dim">other leg: GND</text>
+          <path class="s" d="M180 402 H212 M268 402 H300"/><rect class="res" x="212" y="390" width="56" height="24"/><text x="240" y="406" text-anchor="middle">150 Ω</text>
+
+          <path class="i" d="M460 180 H570 M460 205 H570"/>
+          <rect class="blk" x="570" y="140" width="180" height="130"/><text x="660" y="160" text-anchor="middle" class="h">PCA9685 board</text>
+          <text x="578" y="184">SDA</text><text x="578" y="209">SCL</text><text x="578" y="236" class="r">VCC and V+: 5V</text><text x="578" y="256" class="dim">GND</text>
+          <path class="s" d="M750 165 H810 M750 235 H810"/>
+          <rect class="blk" x="810" y="130" width="170" height="60"/><text x="820" y="152" class="h">CH0–CH10</text><text x="820" y="172" class="dim">11 LED channels</text>
+          <rect class="blk" x="810" y="205" width="170" height="65"/><text x="820" y="230">CH12 sleigh servo</text><text x="820" y="252">CH13 bell servo</text>
+
+          <path class="s" d="M460 320 H500 M556 320 H620"/><rect class="res" x="500" y="308" width="56" height="24"/><text x="528" y="324" text-anchor="middle">330 Ω</text>
+          <rect class="blk" x="620" y="296" width="360" height="48"/><text x="630" y="316" class="h">River 4 px, then string lights 30 px</text><text x="630" y="334"><tspan class="r" fill="#ef7663">5V</tspan><tspan fill="#aab3c6" dx="10">GND</tspan></text>
+
+          <path class="s" d="M460 390 H500 M556 390 H620 M730 390 H790"/><rect class="res" x="500" y="378" width="56" height="24"/><text x="528" y="394" text-anchor="middle">330 Ω</text>
+          <rect class="blk" x="620" y="366" width="110" height="48"/><text x="630" y="386" class="h">Slip ring</text><text x="630" y="404"><tspan fill="#ef7663">5V</tspan><tspan fill="#aab3c6" dx="10">GND</tspan></text>
+          <rect class="blk" x="790" y="366" width="190" height="48"/><text x="800" y="386" class="h">Tree lights, 12 px</text><text x="800" y="404" class="dim">470 µF at the strip</text>
+
+          <path class="i" d="M460 461 H620 M460 467 H620 M460 473 H620 M460 479 H620"/><text x="540" y="452" text-anchor="middle">IN1–IN4</text>
+          <rect class="blk" x="620" y="446" width="150" height="48"/><text x="630" y="466" class="h">ULN2003 board</text><text x="630" y="484"><tspan fill="#ef7663">5V</tspan><tspan fill="#aab3c6" dx="10">GND</tspan></text>
+          <path class="s" d="M770 470 H830" stroke-width="4"/>
+          <rect class="blk" x="830" y="446" width="150" height="48"/><text x="840" y="466" class="h">28BYJ-48</text><text x="840" y="484" class="dim">5-wire plug</text>
+        </svg>
+      </div>
+      <div class="tw"><table>
+        <thead><tr><th>PCA channel</th><th>Connected to</th><th>LED colour</th><th>Extra resistor</th></tr></thead>
+        <tbody>
+          <tr><td><code>0</code></td><td>Chapel side window</td><td>Red, yours</td><td>100 Ω</td></tr>
+          <tr><td><code>1</code></td><td>Chapel side window</td><td>Green, yours</td><td>None</td></tr>
+          <tr><td><code>2</code></td><td>Chapel tower window</td><td>Blue, yours</td><td>None</td></tr>
+          <tr><td><code>3</code></td><td>Bakery shop window</td><td>2 yellow, parallel, yours</td><td>100 Ω</td></tr>
+          <tr><td><code>4</code></td><td>Bakery upstairs</td><td>2 yellow, parallel, yours</td><td>100 Ω</td></tr>
+          <tr><td><code>5</code></td><td>Cottage windows</td><td>2 yellow, parallel, yours</td><td>100 Ω</td></tr>
+          <tr><td><code>6</code></td><td>Hearth</td><td>Red, yours</td><td>100 Ω</td></tr>
+          <tr><td><code>7</code></td><td>Hearth</td><td>Yellow, yours</td><td>100 Ω</td></tr>
+          <tr><td><code>8</code></td><td>Street lamps</td><td>2 yellow, parallel, yours</td><td>100 Ω</td></tr>
+          <tr><td><code>9</code></td><td>Moon</td><td>Yellow, yours</td><td>100 Ω</td></tr>
+          <tr><td><code>10</code></td><td>Stars behind the backdrop</td><td>2 blue, parallel, yours</td><td>None</td></tr>
+          <tr><td><code>12, 13</code></td><td>Sleigh servo, bell servo</td><td>Plug straight into the header</td><td>None</td></tr>
+          <tr><td><code>11, 14, 15</code></td><td>Spare</td><td></td><td></td></tr>
+        </tbody>
+      </table></div>
+      <ul class="plain">
+        <li><b>LED wiring:</b> the long leg goes to the channel's PWM pin and the short leg to its GND pin. Leave the middle V+ pin unused.</li>
+        <li><b>Check your PCA9685 board first.</b> The table assumes the usual 220 Ω resistor on each output, a small black pack beside the headers. That gives about 9 mA per channel, which is within its 10 mA limit. If your board has none, add 220 Ω to every LED channel.</li>
+        <li><b>Remove J1 whenever USB is plugged in.</b> The Nano then runs from USB and the rest from the adapter, with the grounds still joined. The USB port never has to feed the motors.</li>
+        <li><b>Power switch:</b> your rocker switch sits in the left side wall, level with the power board, so it is hidden from the front. It breaks the 5V wire between the DC socket and the fuse, and GND stays connected. Check it is rated 3 A or more.</li>
+        <li><b>Servo supply:</b> solder a 470 µF capacitor across the V+ terminal, and connect that terminal to the 5V rail.</li>
+        <li><b>Slip ring:</b> use two wires for 5V, two for GND and one for data, leaving one spare.</li>
+        <li><b>Shared frequency:</b> the PCA9685 runs all outputs at one frequency, and servos need about 50–60 Hz. I'll use 60 Hz. The LEDs may show a slight flicker when dimmed very low.</li>
+        <li><b>Deck connectors:</b> put plugs on every wire crossing the deck so it can lift off for repairs.</li>
+        <li><b>Buzzer check:</b> connect it briefly across 5 V and GND through the 150 Ω resistor. A steady beep means it is an active type, which can only beep rhythms. A single click means it is passive and can play melodies. Polarity marks matter on active types.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>Power</h2>
+    <div>
+      <p>Motors and pixels must not run from the Nano's 5 V pin or from USB. One 5 V, 3 A wall adapter feeds everything through a shared rail, and all grounds join together. The firmware caps pixel brightness at about a quarter, which still looks bright in a dark room.</p>
+      <div class="tw"><table>
+        <thead><tr><th>Load</th><th class="num">Typical</th><th class="num">Worst case</th></tr></thead>
+        <tbody>
+          <tr><td>Nano</td><td class="num">0.04 A</td><td class="num">0.04 A</td></tr>
+          <tr><td>46 pixels, capped in firmware</td><td class="num">0.60 A</td><td class="num">0.60 A</td></tr>
+          <tr><td>Plain LEDs, 11 channels at 9 mA</td><td class="num">0.10 A</td><td class="num">0.10 A</td></tr>
+          <tr><td>Stepper</td><td class="num">0.24 A</td><td class="num">0.24 A</td></tr>
+          <tr><td>2 servos, moving or both stalled</td><td class="num">0.40 A</td><td class="num">1.30 A</td></tr>
+          <tr class="total"><td>Total against a 3 A supply</td><td class="num">1.38 A</td><td class="num">2.28 A</td></tr>
+        </tbody>
+      </table></div>
+      <p>Uncapped, the 46 pixels could draw 2.8 A at full white, so the brightness cap is essential. Put a 1000 µF capacitor across the pixel supply. LEDs run cool enough for card, but keep the wall adapter outside the box, add an inline 3 A fuse behind the power switch. The switch leaves the adapter live, so unplug the model when nobody is around.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>What to buy</h2>
+    <div>
+      <p>You already have the Nano, stepper and driver board, SG90 servos for the sleigh and bell, the LEDs, buzzers, buttons and the rocker power switch. Resistors and a light sensor weren't in your photos, so add about €3 if you need them. Prices are my rough estimates, not checked against a shop.</p>
+      <div class="tw"><table>
+        <thead><tr><th>Part</th><th>For</th><th class="num">Approx.</th></tr></thead>
+        <tbody>
+          <tr><td>PCA9685 16-channel PWM board</td><td>LED dimming and servos</td><td class="num">€4</td></tr>
+          <tr><td>WS2812B string and short strip</td><td>String lights, tree and river</td><td class="num">€8</td></tr>
+          <tr><td>Female DC socket 5.5/2.1 mm with screw terminals</td><td>Power, takes your 5 V 5 A adapter</td><td class="num">€2</td></tr>
+          <tr><td>Turntable parts: 2 flange bearings, GT2 pulleys and belt, coupling, brass tube</td><td>Turntable</td><td class="num">€17</td></tr>
+          <tr><td>6-wire slip ring</td><td>Tree wiring</td><td class="num">ordered</td></tr>
+          <tr><td>Capacitors, fuse holder and small plugs</td><td>Power and deck connections</td><td class="num">€3</td></tr>
+          <tr class="total"><td>Total</td><td></td><td class="num">€34</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>What happens next</h2>
+    <div>
+      <ol class="plain">
+        <li>Run the buzzer check and the colour test on the clear LEDs.</li>
+        <li>Order the parts and check the PCA9685 board for its output resistors.</li>
+        <li>Write the firmware as a non-blocking state machine with the five show phases above.</li>
+        <li>Bench-test the electronics on a breadboard before any cardboard is glued.</li>
+        <li>Print the house and tree templates and build a test house. Turntable heights wait for the slip ring.</li>
+      </ol>
+    </div>
+  </section>
+  <footer>Concept model. Sizes are in centimetres and the wiring view is simplified. Check every connection against your own boards before powering on.</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+(function(){
+'use strict';
+var $=function(id){return document.getElementById(id)};
+var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- channel state: mirrors what the firmware will hold ---------- */
+var ch={chapel:true,bakery:true,cottage:true,fire:true,lamps:true,moon:true,river:true,tree:true,mode:reduce?'steady':'twinkle',rpm:reduce?0:3,sound:false,labels:innerWidth>=700,wires:false};
+var SW=['chapel','bakery','cottage','fire','lamps','moon','river','tree','sound','labels','wires'];
+var PH=[
+ {n:'Dusk',d:'Room goes dark. The river ice and windows come on in turn',t:9},
+ {n:'Evening',d:'Lights twinkle and the tree turns',t:9},
+ {n:'Sleigh',d:'Servo carries it across the sky',t:13},
+ {n:'Carol',d:'Bell swings, buzzer plays, lights chase',t:12},
+ {n:'Night',d:'Windows go out. The tree and river stay lit',t:9}
+];
+var pi=1,pt=PH[1].t,playing=false;
+
+function syncUI(){
+  SW.forEach(function(k){var c=$('c_'+k);if(c.checked!==ch[k])c.checked=ch[k]});
+  $('mode').value=ch.mode; $('rpm').value=ch.rpm;
+  $('rpmOut').textContent='Tree '+ch.rpm.toFixed(1)+' rpm · motor '+(ch.rpm*3).toFixed(1)+' rpm';
+}
+var phEl=$('phases');
+PH.forEach(function(p,i){
+  var li=document.createElement('li');
+  li.innerHTML='<button type="button"><b>'+p.n+'</b><span>'+p.d+'</span><i></i></button>';
+  li.firstChild.addEventListener('click',function(){jump(i)});
+  phEl.appendChild(li);
+});
+function markPhase(){
+  [].forEach.call(phEl.children,function(li,i){
+    var b=li.firstChild;
+    if(i===pi)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current');
+    b.lastChild.style.width=(i===pi?Math.min(100,pt/PH[i].t*100):0)+'%';
+  });
+}
+
+/* ---------- scene ---------- */
+var host=$('scene'),renderer;
+function noGL(){$('nogl').hidden=false;document.querySelector('.hint').hidden=true;document.querySelector('.zoom').hidden=true;syncUI();markPhase()}
+if(!window.THREE){noGL();return}
+try{renderer=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:false})}catch(e){noGL();return}
+var T=THREE;
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.outputEncoding=T.sRGBEncoding;
+renderer.toneMapping=T.ACESFilmicToneMapping;
+renderer.toneMappingExposure=1.05;
+renderer.shadowMap.enabled=true;
+renderer.shadowMap.type=T.PCFSoftShadowMap;
+host.appendChild(renderer.domElement);
+var scene=new T.Scene();
+scene.background=new T.Color(0x090e1a);
+var cam=new T.PerspectiveCamera(32,1.6,1,600);
+cam.position.set(-18,46,116);
+var orbit=new T.OrbitControls(cam,renderer.domElement);
+orbit.target.set(0,25,0);
+orbit.enablePan=false;orbit.enableZoom=false;orbit.enableDamping=true;orbit.dampingFactor=.08;
+orbit.minPolarAngle=.35;orbit.maxPolarAngle=1.56;
+
+/* seeded random so the model looks the same every load */
+var seed=7;function rnd(){seed=(seed*16807)%2147483647;return (seed-1)/2147483646}
+
+function tex(fn,rx,ry){
+  var c=document.createElement('canvas');c.width=c.height=256;fn(c.getContext('2d'));
+  var t=new T.CanvasTexture(c);t.wrapS=t.wrapT=T.RepeatWrapping;t.repeat.set(rx||1,ry||1);t.encoding=T.sRGBEncoding;t.anisotropy=4;return t;
+}
+var paperT=tex(function(g){
+  g.fillStyle='#fff';g.fillRect(0,0,256,256);
+  for(var i=0;i<256;i+=9){g.fillStyle='rgba(60,40,20,.075)';g.fillRect(i,0,3,256)}
+  for(i=0;i<2600;i++){g.fillStyle='rgba(50,30,10,'+(rnd()*.1)+')';g.fillRect(rnd()*256,rnd()*256,1.5,1.5)}
+},.25,.25);
+var glowT=(function(){
+  var c=document.createElement('canvas');c.width=c.height=128;var g=c.getContext('2d');
+  var r=g.createRadialGradient(64,64,0,64,64,64);
+  r.addColorStop(0,'rgba(255,255,255,1)');r.addColorStop(.25,'rgba(255,255,255,.42)');r.addColorStop(1,'rgba(255,255,255,0)');
+  g.fillStyle=r;g.fillRect(0,0,128,128);return new T.CanvasTexture(c);
+})();
+
+function paper(col,o){var m=new T.MeshStandardMaterial(Object.assign({color:col,map:paperT,roughness:.95,metalness:0,flatShading:true},o||{}));return m}
+function M(g,m,x,y,z,p){var o=new T.Mesh(g,m);o.position.set(x||0,y||0,z||0);o.castShadow=o.receiveShadow=true;(p||scene).add(o);return o}
+function B(w,h,d,m,x,y,z,p){return M(new T.BoxGeometry(w,h,d),m,x,y,z,p)}
+function C(r1,r2,h,m,x,y,z,p,s){return M(new T.CylinderGeometry(r1,r2,h,s||24),m,x,y,z,p)}
+function glow(col,size,p,x,y,z){
+  var s=new T.Sprite(new T.SpriteMaterial({map:glowT,color:col,blending:T.AdditiveBlending,transparent:true,depthWrite:false,opacity:0}));
+  s.scale.set(size,size,1);s.position.set(x||0,y||0,z||0);p.add(s);return s;
+}
+
+var snow=paper(0xf2f0ea),card=paper(0xc49a66),cardDark=paper(0x8c6a42),ink=new T.MeshStandardMaterial({color:0x20242e,roughness:.7});
+var tray=new T.Group(),village=new T.Group();scene.add(tray,village);
+var DECK=9;village.position.y=DECK;
+
+/* table, moon light, ambient */
+var table=new T.Mesh(new T.CircleGeometry(190,48),new T.MeshStandardMaterial({color:0x0e0e15,roughness:.9}));
+table.rotation.x=-Math.PI/2;table.receiveShadow=true;scene.add(table);
+var hemi=new T.HemisphereLight(0x7f97d6,0x14122a,.24);scene.add(hemi);
+var key=new T.DirectionalLight(0xa9c0ff,.3);key.position.set(-30,75,55);key.castShadow=true;
+key.shadow.mapSize.set(1536,1536);var sc=key.shadow.camera;sc.left=-60;sc.right=60;sc.top=70;sc.bottom=-40;sc.far=190;key.shadow.bias=-.0006;key.shadow.normalBias=.04;scene.add(key);
+
+/* ---------- lamps ---------- */
+var lamps={chapel:[],bakery:[],cottage:[],fire:[],lamps:[],moon:[]};
+var level={chapel:0,bakery:0,cottage:0,fire:0,lamps:0,moon:0,river:0,tree:0,dusk:0};
+var WARM=0xffbe6e,DARK=new T.Color(0x171b28);
+function addLight(ch_,col,max,dist,x,y,z,p){var l=new T.PointLight(col,0,dist,2);l.position.set(x,y,z);(p||village).add(l);lamps[ch_].push({light:l,max:max})}
+function win(p,c,x,y,z,w,h,ry,col,noBars){
+  var g=new T.Group();g.position.set(x,y,z);g.rotation.y=ry||0;p.add(g);
+  var mat=new T.MeshBasicMaterial({color:DARK.clone(),toneMapped:false});
+  var pane=new T.Mesh(new T.PlaneGeometry(w,h),mat);g.add(pane);
+  var bar=new T.MeshStandardMaterial({color:0x33261a,roughness:1});
+  if(!noBars){
+    var a=new T.Mesh(new T.BoxGeometry(.14,h,.1),bar);a.position.z=.05;g.add(a);
+    var b=new T.Mesh(new T.BoxGeometry(w,.14,.1),bar);b.position.z=.05;g.add(b);
+  }
+  [[0,h/2],[0,-h/2]].forEach(function(q){var f=new T.Mesh(new T.BoxGeometry(w+.25,.2,.12),bar);f.position.set(0,q[1],.05);g.add(f)});
+  [[w/2],[-w/2]].forEach(function(q){var f=new T.Mesh(new T.BoxGeometry(.2,h+.2,.12),bar);f.position.set(q[0],0,.05);g.add(f)});
+  var col3=new T.Color(col||WARM);
+  var s=glow(col||WARM,Math.max(w,h)*3.6,g,0,0,.5);
+  lamps[c].push({mat:mat,sprite:s,col:col3});
+}
+function house(o){
+  var g=new T.Group();g.position.set(o.x,0,o.z);g.rotation.y=o.ry||0;village.add(g);
+  var w=o.w,d=o.d,h=o.h,rh=o.rh,roof=paper(o.roof);
+  B(w,h,d,paper(o.col),0,h/2,0,g);
+  var s=new T.Shape();s.moveTo(-w/2,0);s.lineTo(w/2,0);s.lineTo(0,rh);s.closePath();
+  M(new T.ExtrudeGeometry(s,{depth:d,bevelEnabled:false}),paper(o.col),0,h,-d/2,g);
+  var a=Math.atan2(rh,w/2),L=Math.hypot(w/2,rh)+1;
+  [-1,1].forEach(function(k){
+    var cx=k*w/4,cy=h+rh/2+.1;
+    var p=B(L,.35,d+1.6,roof,cx,cy,0,g);p.rotation.z=-k*a;
+    var sn=B(L-.5,.45,d+1.1,snow,cx+k*Math.sin(a)*.38,cy+Math.cos(a)*.38,0,g);sn.rotation.z=-k*a;
+  });
+  return g;
+}
+
+/* deck, snow drifts */
+var deck=B(70,.5,45,paper(0xe6e8ee),0,-.25,0,village);
+function clearOfRink(x,z){return Math.hypot(x-2,z-3)>13.5}
+for(var i=0;i<46;i++){
+  var x=-33+rnd()*66,z=-8+rnd()*29;
+  if(!clearOfRink(x,z))continue;
+  var e=new T.Mesh(new T.SphereGeometry(1,10,6),snow);var sx=1.6+rnd()*3.2;
+  e.scale.set(sx,.45+rnd()*.5,sx*.7);e.position.set(x,0,z);e.receiveShadow=true;village.add(e);
+}
+/* stone path around the rink */
+var path=new T.Mesh(new T.RingGeometry(11.6,14,48),paper(0xb7c0d4));path.rotation.x=-Math.PI/2;path.position.set(2,.03,3);path.receiveShadow=true;village.add(path);
+
+/* backdrop, stars, moon */
+B(70,46,.5,paper(0x1b2a4d),0,23,-22.25,village);
+var sg=new T.BufferGeometry(),sp=[];
+for(i=0;i<90;i++){sp.push(-33+rnd()*66,16+rnd()*29,-21.9)}
+sg.setAttribute('position',new T.Float32BufferAttribute(sp,3));
+var starDots=new T.PointsMaterial({color:0x9fc4ff,size:.42,map:glowT,transparent:true,depthWrite:false,blending:T.AdditiveBlending});
+village.add(new T.Points(sg,starDots));
+var moonMat=new T.MeshBasicMaterial({color:DARK.clone(),toneMapped:false});
+var moon=new T.Mesh(new T.CircleGeometry(4.6,40),moonMat);moon.position.set(21,36,-21.92);village.add(moon);
+var moonGlow=new T.Mesh(new T.PlaneGeometry(26,26),new T.MeshBasicMaterial({map:glowT,color:0xfff0c8,blending:T.AdditiveBlending,transparent:true,depthWrite:false,opacity:0}));moonGlow.position.set(21,36,-21.85);village.add(moonGlow);
+lamps.moon.push({mat:moonMat,sprite:moonGlow,col:new T.Color(0xfff0c8),glowK:.5});
+addLight('moon',0xcdd8ff,.5,48,21,34,-14);
+
+/* hills */
+function ridge(z,base,grow,col,ph,cap){
+  var s=new T.Shape(),top=[];
+  for(var x=-35;x<=35;x+=2.5){var r=Math.abs(x)/35;top.push([x,base+grow*r*r+Math.sin(x*.21+ph)*1.2])}
+  s.moveTo(-35,0);top.forEach(function(p){s.lineTo(p[0],p[1])});s.lineTo(35,0);s.closePath();
+  M(new T.ExtrudeGeometry(s,{depth:.4,bevelEnabled:false}),paper(col),0,0,z,village);
+  var c=new T.Shape();top.forEach(function(p,i){i?c.lineTo(p[0],p[1]+.08):c.moveTo(p[0],p[1]+.08)});
+  for(var j=top.length-1;j>=0;j--){c.lineTo(top[j][0],top[j][1]-cap-Math.abs(Math.sin(j*1.4))*1.5)}
+  c.closePath();
+  M(new T.ExtrudeGeometry(c,{depth:.12,bevelEnabled:false}),snow,0,0,z+.4,village);
+}
+ridge(-20.5,17,3,0x2c3e63,1,1);
+ridge(-15.5,8.5,7,0x3a5273,3.1,1.2);
+
+
+/* ---------- frozen river and bridge ---------- */
+/* ice in a 4 cm slot along the foot of the front hills; both ends bend back behind the ridge */
+var rvC=new T.CatmullRomCurve3([[-16.5,-18],[-14,-14.6],[-9,-13],[-2,-12.7],[5,-12.9],[11,-13.6],[14.2,-15.6],[15.2,-18]].map(function(p){return new T.Vector3(p[0],0,p[1])}));
+function rvW(t){return 2.6+1.4*Math.sin(Math.PI*t)}
+function ribbon(extra,y,mat,parent){
+  var pos=[],idx=[],N=60;
+  for(var i=0;i<=N;i++){
+    var t=i/N,p=rvC.getPoint(t),d=rvC.getTangent(t),nx=-d.z,nz=d.x,h=(rvW(t)+extra)/2;
+    pos.push(p.x+nx*h,y,p.z+nz*h,p.x-nx*h,y,p.z-nz*h);
+    if(i<N)idx.push(i*2,i*2+1,i*2+2,i*2+1,i*2+3,i*2+2);
+  }
+  var g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(pos,3));g.setIndex(idx);g.computeVertexNormals();
+  var m=new T.Mesh(g,mat);m.receiveShadow=true;(parent||village).add(m);return m;
+}
+ribbon(1.1,.05,new T.MeshStandardMaterial({color:0xf2f0ea,roughness:1,side:T.DoubleSide}));
+var iceMat=new T.MeshStandardMaterial({color:0x4f7fcf,roughness:.3,metalness:.1,emissive:0x1448e0,emissiveIntensity:0,side:T.DoubleSide});
+ribbon(0,.08,iceMat);
+var rvPix=[],RVP=[.2,.4,.6,.8];
+RVP.forEach(function(t){var p=rvC.getPoint(t);rvPix.push(glow(0x3f7dff,9,village,p.x,.4,p.z))});
+var rvLight=new T.PointLight(0x4a82ff,0,22,2);rvLight.position.set(-1,2.5,-12.5);village.add(rvLight);
+/* light box: card trough glued under the slot, stiffens the deck next to the rink hole */
+(function(){
+  var tm=paper(0xc49a66),N=16;
+  for(var i=0;i<N;i++){
+    var t0=.12+i/N*.76,t1=.12+(i+1)/N*.76,a=rvC.getPoint(t0),b=rvC.getPoint(t1),L=a.distanceTo(b)+.05,w=rvW((t0+t1)/2)+.6;
+    var g=new T.Group();g.position.set((a.x+b.x)/2,-.5,(a.z+b.z)/2);g.rotation.y=-Math.atan2(b.z-a.z,b.x-a.x);village.add(g);
+    B(L,.3,w,tm,0,-4,0,g);B(L,4,.3,tm,0,-2,w/2,g);B(L,4,.3,tm,0,-2,-w/2,g);
+  }
+  RVP.forEach(function(t){var p=rvC.getPoint(t);B(1,.2,1,new T.MeshStandardMaterial({color:0xeef2ff,emissive:0x3f7dff,emissiveIntensity:.9}),p.x,-4.2,p.z,village)});
+})();
+/* footbridge from the rink path to the hill foot, far end tucked against the ridge */
+(function(){
+  var g=new T.Group();g.position.set(-6,0,-12.5);g.rotation.y=Math.PI/2;village.add(g);
+  var S=2.9,Hh=1.3,s=new T.Shape(),k,x;
+  s.moveTo(-S,0);for(k=0;k<=20;k++){x=-S+k/20*2*S;s.lineTo(x,Hh*(1-Math.pow(x/S,2))+.35)}
+  s.lineTo(S,0);for(k=20;k>=0;k--){x=-S+k/20*2*S;s.lineTo(x,Math.max(0,Hh*(1-Math.pow(x/S,2))-.15))}
+  s.closePath();
+  var bw=2.6,wood=paper(0x8c6a42);
+  M(new T.ExtrudeGeometry(s,{depth:bw,bevelEnabled:false}),wood,0,0,-bw/2,g);
+  for(k=0;k<=6;k++){
+    x=-S*.85+k/6*1.7*S;var top=Hh*(1-Math.pow(x/S,2))+.35;
+    [-1,1].forEach(function(sd){B(.18,1.1,.18,wood,x,top+.55,sd*(bw/2-.1),g)});
+  }
+  [-1,1].forEach(function(sd){
+    var pts=[];for(k=0;k<=12;k++){x=-S*.85+k/12*1.7*S;pts.push(new T.Vector3(x,Hh*(1-Math.pow(x/S,2))+1.45,sd*(bw/2-.1)))}
+    M(new T.TubeGeometry(new T.CatmullRomCurve3(pts),24,.1,5,false),wood,0,0,0,g);
+    var sn=[];for(k=0;k<=12;k++){x=-S*.85+k/12*1.7*S;sn.push(new T.Vector3(x,Hh*(1-Math.pow(x/S,2))+1.58,sd*(bw/2-.1)))}
+    M(new T.TubeGeometry(new T.CatmullRomCurve3(sn),24,.09,5,false),snow,0,0,0,g);
+  });
+})();
+
+
+/* ---------- sledding children on the front ridge (static card figures) ---------- */
+(function(){
+  var FZ=-14.95,P0=[1.8,7.2],P1=[11.4,.5],ang=Math.atan2(P1[1]-P0[1],P1[0]-P0[0]),len=Math.hypot(P1[0]-P0[0],P1[1]-P0[1]);
+  var run=new T.Mesh(new T.PlaneGeometry(len,1.5),snow);run.position.set((P0[0]+P1[0])/2,(P0[1]+P1[1])/2,FZ-.02);run.rotation.z=ang;village.add(run);
+  [-.3,.3].forEach(function(o){var tr=new T.Mesh(new T.PlaneGeometry(len*.92,.07),paper(0xb7c0d4));tr.position.set((P0[0]+P1[0])/2-Math.sin(ang)*o,(P0[1]+P1[1])/2+Math.cos(ang)*o,FZ-.01);tr.rotation.z=ang;village.add(tr)});
+  var skin=paper(0xf0c8a0),wood=paper(0x8c6a42);
+  function at(t,lift){return [P0[0]+(P1[0]-P0[0])*t-Math.sin(ang)*lift,P0[1]+(P1[1]-P0[1])*t+Math.cos(ang)*lift]}
+  function sled(g,x){B(2,.18,.2,wood,x,.12,0,g);B(1.8,.12,.2,paper(0xa8342d),x,.36,0,g);B(.12,.3,.2,wood,x-.7,.24,0,g);B(.12,.3,.2,wood,x+.7,.24,0,g)}
+  function head(g,x,y,hat){C(.38,.38,.2,skin,x,y,0,g,14).rotation.x=Math.PI/2;var h=C(0,.4,.6,paper(hat),x,y+.45,0,g,10);h.scale.z=.35;C(.12,.12,.2,snow,x,y+.78,0,g,8).rotation.x=Math.PI/2}
+  function grp(x,y,r){var g=new T.Group();g.position.set(x,y,FZ);g.rotation.z=r||0;village.add(g);return g}
+  /* 1: sliding down, leaning back */
+  var q=at(.5,.1),g=grp(q[0],q[1],ang);sled(g,0);
+  var t=B(.7,1.1,.22,paper(0x2d6fb5),-.1,.95,0,g);t.rotation.z=.35;
+  B(1,.3,.22,paper(0x2a2f45),.45,.55,0,g);head(g,-.35,1.8,0xd9b23a);
+  /* 2: at the top with the sled, about to push off */
+  q=at(.04,.1);g=grp(q[0],q[1],ang*.25);sled(g,.6);
+  B(.3,1,.22,paper(0x2a2f45),-.9,.5,0,g);B(.75,1.1,.22,paper(0xa8342d),-.9,1.5,0,g);head(g,-.9,2.4,0x2f6650);
+  /* 3: pulling an empty sled back up beside the run */
+  q=at(.8,1.7);g=grp(q[0],q[1],ang*.6);sled(g,1.6);
+  var c=B(.75,1.1,.22,paper(0x2f6650),-.6,1.5,0,g);c.rotation.z=.25;B(.3,1,.22,paper(0x2a2f45),-.5,.5,0,g);head(g,-.85,2.4,0xc4503f);
+  var rope=new T.Mesh(new T.CylinderGeometry(.04,.04,1.6,4),paper(0xe2b65c));rope.position.set(.15,.9,0);rope.rotation.z=1.2;g.add(rope);
+})();
+
+
+/* ---------- snowman in front of the bakery (static) ---------- */
+(function(){
+  var g=new T.Group();g.position.set(22,0,9);g.rotation.y=-.5;village.add(g);
+  var sn=new T.MeshStandardMaterial({color:0xf4f3ee,roughness:.95});
+  [[1.5,1.3],[1.1,3.5],[.78,5.1]].forEach(function(b){var m=new T.Mesh(new T.SphereGeometry(b[0],18,14),sn);m.position.y=b[1];m.castShadow=true;g.add(m)});
+  [[-.28,5.3],[.28,5.3]].forEach(function(e){var m=new T.Mesh(new T.SphereGeometry(.09,8,6),ink);m.position.set(e[0],e[1],.72);g.add(m)});
+  [3.8,3.3,2.8].forEach(function(y){var m=new T.Mesh(new T.SphereGeometry(.1,8,6),ink);m.position.set(0,y,y>3.5?1.03:1.08);g.add(m)});
+  var nose=C(0,.13,.7,paper(0xe07a2e),0,5.1,1.05,g,8);nose.rotation.x=Math.PI/2;
+  C(.62,.62,.12,ink,0,5.78,0,g,16);C(.42,.42,.85,ink,0,6.2,0,g,16);
+  var sc=new T.Mesh(new T.TorusGeometry(.72,.16,6,18),paper(0xa8342d));sc.rotation.x=Math.PI/2;sc.position.y=4.42;g.add(sc);
+  B(.32,1.1,.14,paper(0xa8342d),.45,3.9,.75,g).rotation.z=.2;
+  [-1,1].forEach(function(k){var a=C(.06,.06,2.2,cardDark,k*1.6,3.9,0,g,5);a.rotation.z=k*-1.1});
+})();
+
+/* ---------- chapel ---------- */
+var CH=house({x:-23,z:-8,w:10,d:12,h:9,rh:6,col:0xd7c5a6,roof:0x54606f,ry:.12});
+win(CH,'chapel',5.04,5.2,-2.5,1.8,4,Math.PI/2,0xff4a3d);
+win(CH,'chapel',5.04,5.2,2.5,1.8,4,Math.PI/2,0x4de08a);
+var twr=new T.Group();twr.position.set(0,0,7.5);CH.add(twr);
+var tw=paper(0xdccbae);
+B(5.4,15,4.6,tw,0,7.5,0,twr);
+win(twr,'chapel',0,8.4,2.34,2.2,4.6,0,0x4a7dff);
+var dr=B(2.2,3.6,.3,cardDark,0,1.8,2.35,twr);
+[[-2.4,-1.9],[2.4,-1.9],[-2.4,1.9],[2.4,1.9]].forEach(function(p){B(.6,3.6,.6,tw,p[0],16.8,p[1],twr)});
+var cap=C(0,4.3,6.2,paper(0x54606f),0,21.7,0,twr,4);cap.rotation.y=Math.PI/4;
+B(5.4,.4,4.6,tw,0,18.7,0,twr);
+var bell=new T.Group();bell.position.set(0,18.2,0);twr.add(bell);
+C(.45,1.05,1.5,new T.MeshStandardMaterial({color:0xd8a543,metalness:.65,roughness:.35}),0,-1,0,bell,18);
+var bellLight=new T.PointLight(0xffb45e,0,9,2);bellLight.position.set(0,16.5,0);twr.add(bellLight);
+lamps.chapel.push({light:bellLight,max:.7});
+addLight('chapel',0xffb96b,1.1,24,-16,4,4);
+
+/* ---------- bakery ---------- */
+var BK=house({x:21.5,z:-7,w:13,d:9,h:10,rh:5.6,col:0xc7695b,roof:0x4b3a35,ry:-.14});
+win(BK,'bakery',0,3,4.54,7.4,3.1,0,0xffc877);
+win(BK,'bakery',-3.5,7.6,4.54,2,2.2);
+win(BK,'bakery',3.5,7.6,4.54,2,2.2);
+for(i=0;i<7;i++){B(1.16,.2,1.6,paper(i%2?0xf1ede2:0x5f8f7c),-3.48+i*1.16,5.2,5.1,BK).rotation.x=.42}
+B(3,3,.6,snow,0,12.2,4.6,BK).visible=false;
+C(.3,.3,2,ink,4,14,1,BK,8);
+B(1.7,3.6,1.7,paper(0x7a4a3c),3.8,14.4,-1,BK);
+B(2,.45,2,snow,3.8,16.3,-1,BK);
+addLight('bakery',0xffb96b,1.5,27,16,3.5,2.2);
+
+/* ---------- cottage ---------- */
+var CT=house({x:-22,z:13.5,w:12,d:7.6,h:7,rh:5,col:0xe0d8c6,roof:0x7c3b35,ry:.28});
+win(CT,'cottage',-3.2,4,3.84,2,2.2);
+win(CT,'cottage',3.2,4,3.84,2,2.2);
+win(CT,'fire',0,2.1,3.84,1.8,1.6,0,0xff7a33,true);
+B(1.8,.5,.2,cardDark,0,3.3,3.84,CT);
+B(1.8,3.8,1.8,paper(0x8a5a48),3.6,10.8,0,CT);
+B(2.1,.45,2.1,snow,3.6,12.9,0,CT);
+addLight('cottage',0xffb96b,.9,20,-20,4,20);
+addLight('fire',0xff7030,.7,14,-21,2.5,19);
+
+/* ---------- little pines, lamp posts, sensor ---------- */
+function pine(x,z,h){
+  var g=new T.Group();g.position.set(x,0,z);village.add(g);
+  C(.3,.4,1.2,cardDark,0,.6,0,g,6);
+  for(var i=0;i<3;i++){var r=h*.36*(1-i*.24),hh=h*.46;
+    C(0,r,hh,paper(0x355f53),0,1+h*.14+i*h*.25,0,g,7);
+  }
+  var c=C(0,h*.1,h*.12,snow,0,1+h*.62+h*.24,0,g,7);
+}
+pine(29,6,9);pine(32,14,7);pine(25,18,6);pine(-31.5,3,8);pine(-8,20.5,5.5);pine(30.5,-2,6);
+function post(x,z){
+  var g=new T.Group();g.position.set(x,0,z);village.add(g);
+  C(.22,.32,10.6,ink,0,5.3,0,g,8);
+  C(.9,.45,.3,ink,0,12.2,0,g,8);
+  var mat=new T.MeshBasicMaterial({color:DARK.clone(),toneMapped:false});
+  var bulb=new T.Mesh(new T.SphereGeometry(.62,12,10),mat);bulb.position.y=11.3;g.add(bulb);
+  lamps.lamps.push({mat:mat,sprite:glow(0xffd28f,7,g,0,11.3,0),col:new T.Color(0xffd28f)});
+  addLight('lamps',0xffcf8c,.75,17,x,10,z);
+}
+post(-11,18);post(18,17.5);
+C(.5,.5,.25,new T.MeshStandardMaterial({color:0xb5512f}),-5,.14,19.5,village,14);
+
+/* ---------- turntable, tree, skaters ---------- */
+var RX=2,RZ=3,table2=new T.Group();table2.position.set(RX,0,RZ);village.add(table2);
+C(11,11,.6,new T.MeshStandardMaterial({color:0xc3d6ea,metalness:.75,roughness:.28,flatShading:false}),0,.3,0,table2,64);
+var rim=new T.Mesh(new T.TorusGeometry(11,.26,8,64),paper(0xa8342d));rim.rotation.x=Math.PI/2;rim.position.y=.58;table2.add(rim);
+C(.75,.95,3,cardDark,0,2.1,0,table2,10);
+var cR=[8.2,7,5.7,4.3,2.9],cY=[6.4,10.3,14.1,18,21.7];
+var greens=[0x2b5d48,0x2f6650,0x336f57,0x37785e,0x3b8166];
+cR.forEach(function(r,i){var c=C(0,r,7.2,paper(greens[i]),0,cY[i],0,table2,11);c.rotation.y=i*.55});
+var st=new T.Shape();for(i=0;i<10;i++){var a=i*Math.PI/5+Math.PI/2,r=i%2?.72:1.65;st[i?'lineTo':'moveTo'](Math.cos(a)*r,Math.sin(a)*r)}st.closePath();
+var starM=new T.MeshBasicMaterial({color:0xffd27a,toneMapped:false});
+var star=new T.Mesh(new T.ExtrudeGeometry(st,{depth:.3,bevelEnabled:false}),starM);star.position.set(0,26.6,-.15);table2.add(star);
+var starGlow=glow(0xffd27a,9,table2,0,26.6,0);
+var tl=[],TC=[0xff6b57,0xffd27a,0x7fd4ff,0x8cf0b0];
+/* 12 pixels, 4-3-2-2-1 per tier, 1.5 above each cone rim; angles from the seam (at the back) match tools/tree-templates.py */
+[[15,67.5,152.5,290],[120,205,342.5],[35,257.5],[172.5,310],[87.5]].forEach(function(row,t){row.forEach(function(d){
+  var n=tl.length,y=cY[t]-3.6+1.5,rad=cR[t]*(1-1.5/7.2)+.12,ang=d*Math.PI/180-Math.PI/2;
+  var mt=new T.MeshBasicMaterial({color:0xffffff,toneMapped:false});
+  var b=new T.Mesh(new T.SphereGeometry(.34,8,6),mt);b.position.set(Math.cos(ang)*rad,y,Math.sin(ang)*rad);table2.add(b);
+  tl.push({m:mt,s:glow(TC[n%4],3.4,table2,b.position.x,y,b.position.z),c:new T.Color(TC[n%4]),p:n*1.7});
+})});
+var treeLight=new T.PointLight(0xffc98a,0,26,2);treeLight.position.set(RX,12,RZ+9);village.add(treeLight);
+function skater(a,col){
+  var s=new T.Shape();
+  s.moveTo(-1,0);s.lineTo(1,0);s.lineTo(.42,2);s.absarc(0,2.75,.62,-.5,Math.PI+.5,false);s.lineTo(-1,0);
+  var m=M(new T.ExtrudeGeometry(s,{depth:.12,bevelEnabled:false}),paper(col),Math.cos(a)*9,.6,Math.sin(a)*9,table2);
+  m.rotation.y=-a;
+}
+skater(0,0xc0483c);skater(1.57,0xe6d3a8);skater(3.14,0x4f77b3);skater(4.71,0xc0483c);
+
+/* ---------- string lights ---------- */
+var A=[[-11,11.1,18],[-17.7,10.2,-3.8],[15,10.2,-3.4],[18,11.1,17.5]],pts=[];
+for(var s_=0;s_<A.length-1;s_++){
+  for(var t=0;t<1;t+=.02){
+    pts.push(new T.Vector3(A[s_][0]+(A[s_+1][0]-A[s_][0])*t,A[s_][1]+(A[s_+1][1]-A[s_][1])*t-2.1*4*t*(1-t),A[s_][2]+(A[s_+1][2]-A[s_][2])*t));
+  }
+}
+pts.push(new T.Vector3(A[3][0],A[3][1],A[3][2]));
+village.add(new T.Line(new T.BufferGeometry().setFromPoints(pts),new T.LineBasicMaterial({color:0x4a4f5c})));
+var NP=30,cum=[0];for(i=1;i<pts.length;i++)cum.push(cum[i-1]+pts[i].distanceTo(pts[i-1]));
+var total=cum[cum.length-1],pix=[],pg=new T.BufferGeometry(),pa=[],pc=new Float32Array(NP*3);
+for(i=0;i<NP;i++){var w_=(i+.5)/NP*total,j=0;while(cum[j]<w_)j++;pix.push(pts[j]);pa.push(pts[j].x,pts[j].y,pts[j].z)}
+pg.setAttribute('position',new T.Float32BufferAttribute(pa,3));pg.setAttribute('color',new T.BufferAttribute(pc,3));
+var core=new T.Points(pg,new T.PointsMaterial({size:.58,vertexColors:true,toneMapped:false,sizeAttenuation:true,map:glowT,transparent:true,depthWrite:false}));
+var halo=new T.Points(pg,new T.PointsMaterial({size:3.6,vertexColors:true,map:glowT,transparent:true,depthWrite:false,blending:T.AdditiveBlending,opacity:.4,sizeAttenuation:true}));
+village.add(core,halo);
+var strLight=new T.PointLight(0xffc27a,0,36,2);strLight.position.set(0,9,5);village.add(strLight);
+
+/* ---------- sleigh on servo arm ---------- */
+var PIV=new T.Group();PIV.position.set(0,3,-17);village.add(PIV);
+var armLen=28,armM=new T.MeshStandardMaterial({color:0x9a7d55,roughness:.8});
+C(.16,.16,armLen,armM,0,armLen/2,0,PIV,6);
+B(2.2,1.2,1.2,new T.MeshStandardMaterial({color:0x2d6fb5}),0,0,0,PIV);
+var sleigh=new T.Group();sleigh.position.y=armLen;PIV.add(sleigh);
+var sl=new T.Shape();sl.moveTo(-2.4,.8);sl.lineTo(1.2,.8);sl.quadraticCurveTo(2.2,.8,2.3,2);sl.lineTo(1.3,1.7);sl.lineTo(.8,2.3);sl.lineTo(-1.8,2.5);sl.quadraticCurveTo(-2.5,2.5,-2.4,.8);
+M(new T.ExtrudeGeometry(sl,{depth:.25,bevelEnabled:false}),paper(0xb73a33),0,-1.7,0,sleigh);
+B(5.4,.18,.25,paper(0xe2b65c),.2,-1.25,.1,sleigh);
+function deer(x){
+  var s=new T.Shape();s.moveTo(-1.1,.0);s.lineTo(-.9,.8);s.lineTo(.5,.85);s.lineTo(.9,1.6);s.lineTo(1.4,1.5);s.lineTo(1.05,.75);s.lineTo(.8,0);s.lineTo(.55,0);s.lineTo(.5,.42);s.lineTo(-.6,.42);s.lineTo(-.7,0);s.closePath();
+  M(new T.ExtrudeGeometry(s,{depth:.2,bevelEnabled:false}),paper(0x8c6a42),x,-1.25,0,sleigh);
+  B(.08,.7,.1,paper(0xe2b65c),x+.95,.65-1.05,.1,sleigh).rotation.z=-.3;
+}
+deer(3.6);deer(5.7);
+B(4,.05,.08,paper(0xe2b65c),4.5,-.75,.1,sleigh);
+
+/* ---------- electronics tray ---------- */
+var panelMat=new T.MeshStandardMaterial({color:0xc49a66,map:paperT,roughness:.95,transparent:true,opacity:1,flatShading:true});
+B(70,.6,45,card,0,.3,0,tray);
+var front=B(70,8.6,.6,panelMat,0,4.6,22.2,tray),back=B(70,8.6,.6,panelMat,0,4.6,-22.2,tray);
+var left=B(.6,8.6,44,panelMat,-34.7,4.6,0,tray),right=B(.6,8.6,44,panelMat,34.7,4.6,0,tray);
+[front,back,left,right].forEach(function(p){p.castShadow=false});
+/* rocker power switch, left side wall, hidden from the front */
+B(.5,1.1,1.6,chipM,-35.1,4.6,12,tray);var rock=B(.3,.6,.9,new T.MeshStandardMaterial({color:0xcc3a2e,roughness:.4}),-35.4,4.6,12,tray);rock.rotation.z=.25;
+var btn=C(.7,.7,.7,new T.MeshStandardMaterial({color:0xcc3a2e,roughness:.4}),18,4.6,22.75,tray,16);btn.rotation.x=Math.PI/2;
+
+/* drawn about 1.6× real size so the parts stay readable in a 70 cm base */
+var K=1.6;
+function pcb(w,d,col,x,z,y){return B(w*K,.2,d*K,new T.MeshStandardMaterial({color:col,roughness:.6}),x,y||1.3,z,tray)}
+var chipM=new T.MeshStandardMaterial({color:0x14161c,roughness:.5});
+pcb(4.5,1.8,0x1f5fa8,-5,10);B(1.2*K,.3,1.2*K,chipM,-5,1.55,10,tray);B(.9*K,.5,.8*K,new T.MeshStandardMaterial({color:0xc8ccd4,metalness:.8,roughness:.3}),-8.2,1.6,10,tray);
+pcb(6.2,2.5,0x2a2f7a,-6,-4);B(1.2*K,.3,1*K,chipM,-6,1.55,-4,tray);
+for(i=0;i<8;i++){B(.25,.9,.25,chipM,-11.5+i*.8,1.8,-1.8,tray)}
+pcb(3.5,3.2,0x16693f,24,3);for(i=0;i<4;i++){B(.5,.25,.5,new T.MeshStandardMaterial({color:0xff5c4a,emissive:0xff2a1a,emissiveIntensity:.8}),22+i*1.3,1.55,5,tray)}
+B(1.9*K,.4,.7*K,chipM,24,1.6,2.4,tray);
+/* power entry and rail */
+pcb(5,3,0x3c2f1e,-22,12);C(.7,.7,1.8,chipM,-24.6,2.3,11.4,tray,14);B(2.2,1,1.4,new T.MeshStandardMaterial({color:0x2e7d55}),-19.9,1.9,12,tray);B(1.5,.7,.7,new T.MeshStandardMaterial({color:0xd8d8cc}),-22,1.8,14,tray);
+C(.8,.8,1,chipM,-17,1.1,-5,tray,16);
+/* axle, pulleys, belt, stepper */
+C(.42,.42,8,new T.MeshStandardMaterial({color:0xdfe5ee,metalness:.7,roughness:.3}),RX,5,RZ,tray,14);
+C(1.2,1.2,2.4,new T.MeshStandardMaterial({color:0x2a2d36,metalness:.3,roughness:.5}),RX,1.9,RZ,tray,16);
+var pulB=new T.Group(),pulS=new T.Group();pulB.position.set(RX,5.4,RZ);pulS.position.set(RX+12,5.4,RZ);tray.add(pulB,pulS);
+var redM=paper(0xc4503f);
+C(4.5,4.5,.7,redM,0,0,0,pulB,40);B(8.8,.74,.6,paper(0xefeadf),0,0,0,pulB);
+C(1.5,1.5,.7,redM,0,0,0,pulS,24);B(2.9,.74,.4,paper(0xefeadf),0,0,0,pulS);
+var bp=[],R1=4.62,R2=1.62;
+for(i=0;i<=16;i++){var a=Math.PI/2+i/16*Math.PI;bp.push(new T.Vector3(RX+Math.cos(a)*R1,5.4,RZ+Math.sin(a)*R1))}
+for(i=0;i<=8;i++){var a=-Math.PI/2+i/8*Math.PI;bp.push(new T.Vector3(RX+12+Math.cos(a)*R2,5.4,RZ+Math.sin(a)*R2))}
+M(new T.TubeGeometry(new T.CatmullRomCurve3(bp,true),150,.14,6,true),new T.MeshStandardMaterial({color:0x1a1a20,roughness:.7}),0,0,0,tray);
+C(2,2,3.2,new T.MeshStandardMaterial({color:0xaeb6c2,metalness:.6,roughness:.4}),RX+12,2.2,RZ,tray,24);
+C(.3,.3,1.6,new T.MeshStandardMaterial({color:0xe4e4e8,metalness:.7}),RX+12,4.6,RZ,tray,10);
+B(4.4,.5,4.4,paper(0x6fae97),RX+12,.75,RZ,tray);
+
+/* wires */
+function wire(a,b,col,h){
+  var m=new T.Vector3((a[0]+b[0])/2,(a[1]+b[1])/2+(h||1.4),(a[2]+b[2])/2);
+  var cv=new T.QuadraticBezierCurve3(new T.Vector3(a[0],a[1],a[2]),m,new T.Vector3(b[0],b[1],b[2]));
+  var o=new T.Mesh(new T.TubeGeometry(cv,24,.1,5,false),new T.MeshStandardMaterial({color:col,roughness:.6}));tray.add(o);
+}
+var trayLight=new T.PointLight(0xfff0dc,0,90,1.4);trayLight.position.set(0,16,14);tray.add(trayLight);
+var RED=0xe2604d,BLK=0x8a93a6,YEL=0xffc24a,GRN=0x7cc0a6;
+wire([-25.6,1.6,11.6],[-34.3,4.4,11.6],RED,2);wire([-25.6,1.6,12.4],[-34.3,4.4,12.4],RED,2.4);wire([-20,2.1,11],[-5,1.5,11.5],RED);wire([-20,2.1,12.6],[-5,1.5,8.5],BLK,2);
+wire([-20,2.1,10],[-6,1.5,-3],RED,2.5);wire([-3,1.5,9],[-4,1.5,-3],GRN,1.6);wire([-1,1.5,9.6],[-3,1.5,-2.5],YEL,1.2);
+wire([-1.6,1.5,10],[23,1.5,4.2],YEL,3);wire([-1.6,1.5,10.6],[24.5,1.5,4.6],GRN,3.5);
+wire([25,1.5,2],[RX+13.4,3,RZ],RED,1.5);wire([RX+1,2,RZ],[-1.6,1.5,10.2],YEL,2);
+wire([-5,1.5,11],[-17,1.5,-5],BLK,3);wire([-1,1.5,10.8],[18,4.6,22],GRN,3);
+
+var risers=[];
+function riser(a,b,col){
+  var o=new T.Mesh(new T.CylinderGeometry(.09,.09,1,5),new T.MeshBasicMaterial({color:col}));o.visible=false;scene.add(o);
+  risers.push({a:new T.Vector3(a[0],a[1],a[2]),b:new T.Vector3(b[0],b[1],b[2]),o:o});
+}
+riser([-10,1.5,-4],[-21,0,-8],YEL);riser([-8,1.5,-4],[20,0,-6],YEL);riser([-9,1.5,-3],[-21,0,13],YEL);riser([-3,1.5,-5],[0,3,-17],GRN);riser([-4,1.5,9.5],[-11,0,18],RED);riser([-3,1.5,-3],[21,0,-14],YEL);riser([-2,1.5,9.6],[-12.5,-4,-13.6],GRN);
+var UP=new T.Vector3(0,1,0),va=new T.Vector3(),vb=new T.Vector3(),vd=new T.Vector3();
+function updateRisers(on,lift){
+  risers.forEach(function(r){
+    r.o.visible=on;if(!on)return;
+    va.copy(r.a);vb.copy(r.b);vb.y+=village.position.y;
+    vd.subVectors(vb,va);var L=vd.length();
+    var k=ch.wires?2.6:1;r.o.scale.set(k,L,k);r.o.position.addVectors(va,vb).multiplyScalar(.5);
+    r.o.quaternion.setFromUnitVectors(UP,vd.normalize());
+  });
+}
+
+/* ---------- 3D labels ---------- */
+var labelHost=$('labels'),tags=[];
+function tag(text,set,parent,x,y,z){
+  var d=document.createElement('div');d.className='tag3d'+(set!=='top'?' under':'');d.textContent=text;labelHost.appendChild(d);
+  var a=new T.Object3D();a.position.set(x,y,z);parent.add(a);tags.push({d:d,a:a,set:set});
+}
+tag('Chapel, bell servo','top',village,-22,26,0);
+tag('Bakery','top',village,21,18,-6);
+tag('Cottage','top',village,-29,11,19);
+tag('Rink turns','top',village,RX+6,1.6,RZ+12);
+tag('String lights','top',village,6,11,-6);
+tag('Sleigh arm','top',village,-13,17,-17);
+tag('Frozen river, bridge','top',village,-6,3.4,-12.5);
+tag('Sledding children','top',village,7,9,-15);
+tag('Snowman','top',village,22,7.4,9);
+tag('Moon','top',village,21,42.5,-21);
+tag('Light sensor','top',village,-5,2.2,20);
+tag('Nano','under',tray,-5,4.2,10);
+tag('PCA9685','under',tray,-6,4,-4);
+tag('ULN2003','under',tray,24,4,3);
+tag('Stepper','under',tray,RX+12,8,RZ);
+tag('Belt 3:1','under',tray,RX+4,7,RZ+6);
+tag('Slip ring','under',tray,RX-3,3.2,RZ-1);
+tag('5 V in, fuse','under',tray,-21,5,13);
+tag('Buzzer','under',tray,-19,3,-5);
+tag('Guest button','under',tray,18,7,23);
+tag('Power switch','under',tray,-36,7,12);
+tag('River light box, 4 px','under',village,6,-5,-12.5);
+
+/* ---------- see-through layer: parts inside the houses, the deck turns to glass ---------- */
+var xr=false,xrK=0,mech=[],ghosts=null;
+var leadM=new T.MeshBasicMaterial({color:0xb8c0cc}),servoM=new T.MeshStandardMaterial({color:0x2d6fb5});
+function keep(o){o.userData.keep=true;o.visible=false;mech.push(o);return o}
+var simpleW=[],detailW=[],redW=new T.MeshBasicMaterial({color:0xff4d3d}),feet=[],blkW=new T.MeshBasicMaterial({color:0x6b7280});
+function led(p,x,y,z,col,key){
+  feet.push({p:p,x:x,z:z,key:key});
+  var g=keep(new T.Group());g.position.set(x,0,z);p.add(g);
+  simpleW.push(C(.07,.07,y,leadM,0,y/2,0,g,5));
+  /* detail: long leg (+) to the channel pin, short leg (−) to GND */
+  var a=C(.08,.08,y,redW,.16,y/2,0,g,6),k=C(.08,.08,y,blkW,-.16,y/2,0,g,6);a.visible=k.visible=false;detailW.push(a,k);
+  var b=new T.Mesh(new T.SphereGeometry(.32,10,8),new T.MeshBasicMaterial({color:col}));b.position.y=y+.15;g.add(b);
+}
+led(CH,3.8,5.2,-2.5,0xff4a3d,'Chapel nave');led(CH,3.8,5.2,2.5,0x4de08a,'Chapel nave');
+led(twr,0,8.4,1.1,0x4a7dff,'Chapel tower');
+(function(){var g=keep(new T.Group());twr.add(g);
+  B(5,.2,4.2,paper(0xc49a66),0,14.6,0,g);B(2.3,2.3,1.2,servoM,0,15.9,-1.3,g);C(.07,.07,14.6,leadM,1.4,7.3,-1.6,g,5);})();
+led(BK,-1.8,2.2,3,0xffc24a,'Bakery');led(BK,1.8,2.2,3,0xffc24a,'Bakery');
+led(BK,-3.5,7,3,0xffc24a,'Bakery');led(BK,3.5,7,3,0xffc24a,'Bakery');
+keep(B(12.6,.2,8.6,paper(0xc49a66),0,5.5,0,BK));
+led(CT,-3.2,3.8,2.6,0xffc24a,'Cottage windows');led(CT,3.2,3.8,2.6,0xffc24a,'Cottage windows');
+led(CT,-.4,1.7,2.9,0xff4a3d,'Cottage hearth');led(CT,.4,1.7,2.9,0xffa020,'Cottage hearth');
+PIV.children[1].userData.keep=true; /* sleigh servo body stays solid */
+tag('Red, green LEDs · PCA 0, 1','xr',CH,6,3,0);
+tag('Blue LED · PCA 2','xr',twr,0,11.5,2.4);
+tag('Bell servo · PCA 13','xr',twr,0,17.6,-2.4);
+tag('Shop, upstairs LEDs · PCA 3, 4','xr',BK,0,9.5,4.6);
+tag('Window, hearth LEDs · PCA 5–7','xr',CT,0,6.2,4);
+tag('Sleigh servo · PCA 12','xr',village,0,4.4,-17);
+tag('Light sensor · A0','xr',village,-5,1.4,19.5);
+
+/* wires and plugs: optional detail ("Show wires and plugs"), one plug under the deck at every wire crossing */
+var plugs=[],plugM=new T.MeshStandardMaterial({color:0xf2efe6,roughness:.5});
+function toVillage(o,x,z){var v=new T.Vector3(x,0,z);for(var q=o;q&&q!==village;q=q.parent){q.updateMatrix();v.applyMatrix4(q.matrix)}return v}
+var plugAt={};
+function plug(name,n,v,col,from,y){
+  y=y===undefined?-1.1:y;plugAt[name]=v;
+  var g=new T.Group();g.position.set(v.x,y,v.z);g.userData.keep=true;g.visible=false;village.add(g);plugs.push(g);
+  B(2.4,1,1.6,plugM,0,0,0,g);B(2.44,.26,1.64,new T.MeshBasicMaterial({color:col}),0,.3,0,g);
+  C(.2,.2,-y-.5,leadM,0,(-y-.5)/2+.5,0,g,6);
+  tag(name+' · '+n+' wires','wires',village,v.x,y-1.3,v.z);
+  if(from)riser(from,[v.x,y+.5,v.z],col);
+}
+var PCA=[-7,1.5,-3.5],NANO=[-4,1.5,9.5];
+plug('Chapel nave',3,new T.Vector3(-21,0,-8),YEL);
+plug('Chapel tower',5,toVillage(twr,1.4,-1.6),GRN,PCA);
+plug('Bakery',3,new T.Vector3(20,0,-6),YEL);
+plug('Cottage windows',2,new T.Vector3(-21,0,13),YEL);
+plug('Cottage hearth',3,toVillage(CT,0,2.2),RED,PCA);
+plug('Lamp left',2,new T.Vector3(-11,0,18),RED);
+plug('Lamp right',2,new T.Vector3(18,0,17.5),RED,PCA);
+plug('Moon and stars',3,new T.Vector3(21,0,-14),YEL);
+plug('River, string lights',3,new T.Vector3(-12.5,0,-13.6),GRN,null,-4.6);
+plug('Sleigh servo',3,new T.Vector3(0,0,-17),GRN);
+plug('Light sensor',2,new T.Vector3(-5,0,19.5),BLK,NANO);
+/* + and − wires along the deck from each LED to its house plug */
+feet.forEach(function(f){
+  var a=toVillage(f.p,f.x,f.z),b=plugAt[f.key];
+  [[redW,.16],[blkW,-.16]].forEach(function(w){
+    var pts=[new T.Vector3(a.x+w[1],.08,a.z),new T.Vector3((a.x+b.x)/2+w[1],.08,(a.z+b.z)/2),new T.Vector3(b.x+w[1],.08,b.z),new T.Vector3(b.x+w[1],-.6,b.z)];
+    var m=new T.Mesh(new T.TubeGeometry(new T.CatmullRomCurve3(pts),24,.07,5,false),w[0]);
+    m.userData.keep=true;m.visible=false;village.add(m);detailW.push(m);
+  });
+});
+/* everything on the deck fades except light sources, the parts above and what hangs below the deck */
+function collectGhosts(){
+  ghosts=[];
+  function walk(o,top){
+    if(o.userData.keep||(top&&o.position.y<-.4))return;
+    if(o.isMesh&&o.material&&!o.material.isMeshBasicMaterial&&o.material!==iceMat){
+      var m=o.material.clone();m.transparent=true;m.depthWrite=false;
+      ghosts.push({o:o,m0:o.material,m1:m,a:o.material.opacity,cs:o.castShadow});
+    }
+    o.children.forEach(function(c){walk(c,false)});
+  }
+  village.children.forEach(function(c){walk(c,true)});
+}
+var lastK=0;
+function updateGhosts(){
+  if(!ghosts)collectGhosts();
+  var on=xrK>.01;
+  ghosts.forEach(function(g){g.o.material=on?g.m1:g.m0;g.m1.opacity=g.a*(1-xrK*.87);g.o.castShadow=on?false:g.cs});
+}
+
+/* ---------- camera, sizing ---------- */
+var W=1,H=1,fit=1;
+function size(){
+  W=host.clientWidth;H=host.clientHeight;if(!W||!H)return;
+  renderer.setSize(W,H,false);cam.aspect=W/H;
+  fit=cam.aspect<1.45?1.45/cam.aspect:1;
+  cam.updateProjectionMatrix();
+}
+var ro=window.ResizeObserver?new ResizeObserver(size):null;if(ro)ro.observe(host);addEventListener('resize',size);size();
+var v0=cam.position.clone().sub(orbit.target).multiplyScalar(fit);cam.position.copy(orbit.target).add(v0);
+function zoom(k){cam.position.sub(orbit.target).multiplyScalar(k).add(orbit.target)}
+$('zin').onclick=function(){zoom(.85)};$('zout').onclick=function(){zoom(1.18)};
+
+/* ---------- mechanisms ---------- */
+var sleighT=-1,bellT=-1,open=false,lift=0,angle=0,turnDir=1,turnHold=0;
+var PARK=-82*Math.PI/180;
+function ease(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2}
+function launch(){if(sleighT<0)sleighT=0}
+function armAngle(t){
+  if(t<8)return PARK+(-2*PARK)*ease(t/8);
+  if(t<9.5)return -PARK;
+  if(t<12)return -PARK+2*PARK*ease((t-9.5)/2.5);
+  return PARK;
+}
+/* Jingle Bells, public-domain tune: same note table the firmware can use */
+var N={C:523.25,D:587.33,E:659.25,F:698.46,G:783.99};
+var TUNE=[['E',1],['E',1],['E',2],['E',1],['E',1],['E',2],['E',1],['G',1],['C',1.5],['D',.5],['E',4],['F',1],['F',1],['F',1.5],['F',.5],['F',1],['E',1],['E',1],['E',.5],['E',.5],['E',1],['D',1],['D',1],['E',1],['D',2],['G',2]];
+var BEAT=.235,actx=null,voices=[];
+function playTune(){
+  if(!ch.sound)return;
+  try{
+    actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+    if(actx.state==='suspended')actx.resume();
+    var at=actx.currentTime+.05;
+    TUNE.forEach(function(n){
+      var o=actx.createOscillator(),g=actx.createGain(),d=n[1]*BEAT;
+      o.type='square';o.frequency.value=N[n[0]];
+      g.gain.setValueAtTime(.045,at);g.gain.setValueAtTime(0,at+d*.86);
+      o.connect(g).connect(actx.destination);o.start(at);o.stop(at+d);voices.push(o);at+=d;
+    });
+  }catch(e){}
+}
+function stopTune(){voices.forEach(function(o){try{o.stop()}catch(e){}});voices=[]}
+function carol(){bellT=0;stopTune();playTune()}
+
+/* ---------- the show ---------- */
+function applyPhase(i,t,enter){
+  var c=ch;
+  if(i===0){
+    if(enter){Object.assign(c,{chapel:false,bakery:false,cottage:false,fire:false,lamps:false,moon:false,river:false,tree:false,mode:'off',rpm:0})}
+    c.moon=t>.6;c.river=t>1.2;c.chapel=t>1.8;c.cottage=t>3.2;c.bakery=t>4.6;c.fire=t>5.4;c.lamps=t>6.2;
+    if(t>7.4)c.mode='steady';
+  }else if(i===1){
+    Object.assign(c,{chapel:true,bakery:true,cottage:true,fire:true,lamps:true,moon:true,river:true});
+    c.tree=true;c.mode='twinkle';c.rpm=3;
+  }else if(i===2){
+    if(enter)launch();
+    c.moon=!(t>8.8&&t<12.4);
+  }else if(i===3){
+    if(enter){carol();c.mode='chase';c.rpm=5}
+  }else if(i===4){
+    if(enter){c.rpm=1.5;c.mode='twinkle'}
+    c.cottage=t<1.2;c.fire=t<1.8;c.bakery=t<3;c.chapel=t<4.4;if(t>5.8)c.mode='off';
+  }
+  syncUI();
+}
+function jump(i){
+  setPlay(false);
+  for(var k=0;k<=i;k++){applyPhase(k,PH[k].t,false)}
+  if(i===0)Object.assign(ch,{chapel:true,bakery:true,cottage:true,fire:true,lamps:true,moon:true,river:true,mode:'steady'});
+  pi=i;pt=PH[i].t;
+  applyPhase(i,i===2||i===3?0:PH[i].t,i===2||i===3);
+  if(i===2||i===3){pt=0;playingOne=true}
+  syncUI();markPhase();
+}
+var playingOne=false;
+function setPlay(v){
+  playing=v;playingOne=false;
+  $('btnPlay').textContent=v?'Stop the show':'Play the evening show';
+}
+function startShow(){setPlay(true);pi=0;pt=0;applyPhase(0,0,true)}
+
+/* controls */
+SW.forEach(function(k){$('c_'+k).addEventListener('change',function(e){
+  ch[k]=e.target.checked;
+  if(k!=='sound'&&k!=='labels'&&k!=='wires')setPlay(false);
+  if(k==='wires'&&ch.wires&&!xr&&!open)$('btnXray').click();
+  syncUI();
+})});
+$('mode').addEventListener('change',function(e){ch.mode=e.target.value;setPlay(false);syncUI()});
+$('rpm').addEventListener('input',function(e){ch.rpm=+e.target.value;setPlay(false);syncUI()});
+$('btnPlay').addEventListener('click',function(){playing?(setPlay(false),stopTune()):startShow()});
+$('btnSleigh').addEventListener('click',function(){launch()});
+$('btnCarol').addEventListener('click',function(){carol()});
+$('btnOpen').addEventListener('click',function(){
+  open=!open;this.setAttribute('aria-pressed',open);
+  this.textContent=open?'Lower the village':'Lift the village';
+  camView();
+});
+$('btnXray').addEventListener('click',function(){
+  xr=!xr;this.setAttribute('aria-pressed',xr);
+  this.textContent=xr?'Solid deck':'See through the deck';
+  camView();
+});
+function camView(){
+  camGoal=open?{p:new T.Vector3(12,46,96),t:new T.Vector3(0,14,0)}:xr?{p:new T.Vector3(-8,30,94),t:new T.Vector3(0,8,0)}:{p:new T.Vector3(-18,46,116),t:new T.Vector3(0,25,0)};
+  camGoal.k=0;camGoal.p.sub(camGoal.t).multiplyScalar(fit).add(camGoal.t);
+}
+var camGoal=null;
+orbit.addEventListener('start',function(){camGoal=null});
+
+/* ---------- frame ---------- */
+var clock=new T.Clock(),now=0,col=new T.Color(),vis=true;
+if(window.IntersectionObserver){new IntersectionObserver(function(e){vis=e[0].isIntersecting;if(vis)clock.getDelta()}).observe(host)}
+function apply(k,v){lamps[k].forEach(function(l){
+  if(l.light)l.light.intensity=l.max*v;
+  if(l.mat){l.mat.color.copy(DARK).lerp(l.col,Math.min(1,v))}
+  if(l.sprite)l.sprite.material.opacity=v*(l.glowK||.62);
+})}
+function pixel(i){
+  var m=ch.mode;
+  if(m==='off')return col.setRGB(.05,.05,.06);
+  if(m==='steady')return col.setRGB(1,.72,.38);
+  if(m==='twinkle'){
+    var n=Math.sin(now*(1.1+(i*7%5)*.4)+i*2.4);
+    var v=.34+.66*Math.pow(.5+.5*n,3);
+    return col.setRGB(v,v*.72,v*.38);
+  }
+  var d=((now*11-i)%NP+NP)%NP,on=Math.max(0,1-d/6);
+  var hue=i%3;
+  return hue===0?col.setRGB(.25+on,.07+on*.6,.05+on*.2):hue===1?col.setRGB(.07+on*.7,.22+on*.75,.1+on*.3):col.setRGB(.28+on,.2+on*.7,.08+on*.3);
+}
+function frame(){
+  requestAnimationFrame(frame);
+  if(!vis||!W)return;
+  var dt=Math.min(clock.getDelta(),.05);now+=dt;
+  if(playing||playingOne){
+    pt+=dt;
+    if(pt>=PH[pi].t){
+      if(playing){pi=(pi+1)%PH.length;pt=0;applyPhase(pi,0,true)}
+      else{pt=PH[pi].t;playingOne=false}
+    }else if(playing){applyPhase(pi,pt,false)}
+    else if(pi===2){applyPhase(2,pt,false)}
+    markPhase();
+  }
+  var smooth=1-Math.exp(-dt*3.2);
+  ['chapel','bakery','cottage','lamps','moon'].forEach(function(k){
+    level[k]+=((ch[k]?1:0)-level[k])*smooth;apply(k,level[k]);
+  });
+  starDots.opacity=.2+.8*level.moon;
+  level.river+=((ch.river?1:0)-level.river)*smooth;
+  iceMat.emissiveIntensity=level.river*.75;
+  rvPix.forEach(function(sp){sp.material.opacity=level.river*.35});
+  rvLight.intensity=level.river*.9;
+  level.fire+=((ch.fire?1:0)-level.fire)*smooth;
+  var fl=.68+.2*Math.sin(now*11)+.14*Math.sin(now*23.3+1)+.1*Math.sin(now*5.7);
+  apply('fire',level.fire*(reduce?.85:fl));
+
+  /* tree and belt */
+  var w=ch.rpm*2*Math.PI/60;angle+=w*dt;
+  table2.rotation.y=angle;pulB.rotation.y=angle;pulS.rotation.y=angle*3;
+  level.tree+=((ch.tree?1:0)-level.tree)*smooth;
+  tl.forEach(function(l,i){
+    var v=level.tree*(reduce?.9:.55+.45*Math.sin(now*2.2+l.p));
+    l.m.color.copy(DARK).lerp(l.c,Math.max(0,v));l.s.material.opacity=Math.max(0,v)*.6;
+  });
+  starM.color.setRGB(.15+.85*level.tree,.13+.69*level.tree,.1+.38*level.tree);
+  starGlow.material.opacity=level.tree*.7;
+  treeLight.intensity=level.tree*1;
+
+  /* string */
+  var sum=0;
+  for(var i=0;i<NP;i++){var c=pixel(i);pc[i*3]=c.r;pc[i*3+1]=c.g;pc[i*3+2]=c.b;sum+=c.r}
+  pg.attributes.color.needsUpdate=true;
+  strLight.intensity=ch.mode==='off'?0:Math.min(1.1,sum/NP*1.3);
+
+  /* sleigh servo */
+  if(sleighT>=0){sleighT+=dt;if(sleighT>12.1)sleighT=-1}
+  var th=sleighT>=0?armAngle(sleighT):PARK;
+  PIV.rotation.z=-th;sleigh.rotation.z=th+(sleighT>=0&&sleighT<8?Math.sin(now*3)*.04:0);
+
+  /* bell servo */
+  if(bellT>=0){bellT+=dt;if(bellT>8.4)bellT=-1}
+  bell.rotation.z=bellT>=0?Math.sin(bellT*5.2)*.62*Math.min(1,(8.4-bellT)*2):0;
+
+  /* lift */
+  lift+=((open?1:0)-lift)*(1-Math.exp(-dt*3.6));
+  var lifted=DECK+ease(Math.min(1,lift))*28;
+  village.position.y=lifted;
+  xrK+=((xr?1:0)-xrK)*(1-Math.exp(-dt*4));if(!xr&&xrK<.005)xrK=0;
+  if(Math.abs(xrK-lastK)>.001||(xrK===0&&lastK!==0)){updateGhosts();lastK=xrK}
+  var under=Math.max(lift,xrK);
+  panelMat.opacity=1-Math.min(1,under*1.5)*.9;
+  panelMat.depthWrite=under<.3;
+  updateRisers(under>.04,lift);
+  mech.forEach(function(o){o.visible=under>.05});
+  var wOn=ch.wires&&under>.05;
+  plugs.forEach(function(o){o.visible=wOn});detailW.forEach(function(o){o.visible=wOn});simpleW.forEach(function(o){o.visible=!wOn});
+  trayLight.intensity=under*1.5;
+
+  /* camera tween */
+  if(camGoal){
+    camGoal.k+=dt/1.4;var q=1-Math.exp(-dt*3.4);
+    cam.position.lerp(camGoal.p,q);orbit.target.lerp(camGoal.t,q);
+    if(camGoal.k>=1.6)camGoal=null;
+  }
+  orbit.update();
+
+  /* labels */
+  var showTop=ch.labels&&!open&&xrK<.4,showUnder=ch.labels&&(lift>.6||xrK>.6);
+  tags.forEach(function(t){
+    var on=t.set==='top'?showTop:t.set==='wires'?showUnder&&ch.wires:t.set==='xr'?showUnder&&!ch.wires:showUnder;
+    t.d.style.opacity=on?1:0;
+    if(!on)return;
+    t.a.getWorldPosition(va);va.project(cam);
+    var x=(va.x*.5+.5)*W,y=(-va.y*.5+.5)*H;
+    t.d.style.transform='translate('+Math.round(x)+'px,'+Math.round(y)+'px) translate(-50%,-100%)';
+  });
+
+  renderer.render(scene,cam);
+}
+Object.keys(level).forEach(function(k){level[k]=1});
+syncUI();markPhase();
+frame();
+})();
+</script>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297">
+<style>
+.cut{fill:#fff;stroke:#000;stroke-width:.35}
+.hole{fill:#cfd8e6;stroke:#000;stroke-width:.3}
+.fold{fill:none;stroke:#1a5fb4;stroke-width:.3;stroke-dasharray:2 1.2}
+.mark{fill:none;stroke:#888;stroke-width:.3;stroke-dasharray:.6 .8}
+.dim{fill:none;stroke:#c01c28;stroke-width:.22}
+text{font-family:Arial,Helvetica,sans-serif;fill:#222}
+.dt{font-size:2.9px;fill:#c01c28}
+.nm{font-size:3.4px;font-weight:bold}
+.ct{font-weight:normal;fill:#555}
+.nt{font-size:2.7px;fill:#444}
+.h1{font-size:5px;font-weight:bold}
+.lg{font-size:2.8px;fill:#444}
+</style>
+<rect width="210" height="297" fill="#fff"/>
+<text class="h1" x="12" y="16">Lantern Square tree templates: Christmas tree</text>
+<text class="lg" x="198" y="16" text-anchor="end">page 5 of 9</text>
+<text class="lg" x="12" y="22.5">Print at 100 % on paper, then trace onto thin card. Sizes in cm. The glue tab lies beyond the dashed line.</text>
+<path class="cut" d="M12 26 h12"/><text class="lg" x="26" y="27">cut</text>
+<path class="hole" d="M36 24.6 h6 v3 h-6 Z"/><text class="lg" x="44" y="27">cut out (window)</text>
+<path class="fold" d="M70 26 h12"/><text class="lg" x="84" y="27">fold or score</text>
+<path class="mark" d="M106 26 h12"/><text class="lg" x="120" y="27">mark only</text>
+<path class="dim" d="M148 26 h50 M148 24.5 v3 M198 24.5 v3"/>
+<text class="dt" x="173" y="24" text-anchor="middle">check: 5.0 cm</text>
+<text class="nm" x="23.0" y="39.0">Tree tier 2, half B<tspan class="ct"> · cut 1 · thin card</tspan></text>
+<path class="cut" d="M70.5 223.89 L74.52 221.7 L78.44 219.32 L82.25 216.78 L85.94 214.06 L89.5 211.17 L92.92 208.13 L96.2 204.93 L99.33 201.59 L102.31 198.1 L105.12 194.49 L107.77 190.75 L110.24 186.89 L112.54 182.93 L114.65 178.86 L116.57 174.71 L118.31 170.47 L119.84 166.15 L121.18 161.77 L122.32 157.33 L123.25 152.85 L123.98 148.32 L124.5 143.77 L124.82 139.2 L124.92 134.62 L124.82 130.04 L124.5 125.47 L123.98 120.92 L123.25 116.4 L122.32 111.91 L121.18 107.48 L119.84 103.09 L118.31 98.78 L116.57 94.54 L114.65 90.38 L112.54 86.32 L110.24 82.35 L107.77 78.49 L105.12 74.75 L102.31 71.14 L99.33 67.66 L96.2 64.31 L92.92 61.12 L89.5 58.07 L85.94 55.19 L82.25 52.47 L78.44 49.92 L74.52 47.55 L70.5 45.36 L60.47 43.0 L23.0 115.7 L30.74 122.51 L31.29 122.81 L31.82 123.13 L32.34 123.47 L32.84 123.84 L33.32 124.23 L33.79 124.65 L34.23 125.08 L34.66 125.53 L35.06 126.01 L35.44 126.5 L35.8 127.0 L36.14 127.53 L36.45 128.07 L36.74 128.62 L37.0 129.18 L37.23 129.76 L37.44 130.34 L37.62 130.94 L37.78 131.54 L37.9 132.15 L38.0 132.76 L38.07 133.38 L38.12 134.0 L38.13 134.62 L38.12 135.24 L38.07 135.86 L38.0 136.48 L37.9 137.1 L37.78 137.7 L37.62 138.31 L37.44 138.9 L37.23 139.49 L37.0 140.06 L36.74 140.63 L36.45 141.18 L36.14 141.72 L35.8 142.24 L35.44 142.75 L35.06 143.24 L34.66 143.71 L34.23 144.16 L33.79 144.6 L33.32 145.01 L32.84 145.4 L32.34 145.77 L31.82 146.12 L31.29 146.44 L30.74 146.74 Z"/>
+<path class="hole" d="M83.41 191.14 L83.18 189.99 L82.53 189.02 L81.56 188.37 L80.41 188.14 L79.26 188.37 L78.29 189.02 L77.64 189.99 L77.41 191.14 L77.64 192.29 L78.29 193.26 L79.26 193.91 L80.41 194.14 L81.56 193.91 L82.53 193.26 L83.18 192.29 Z"/>
+<path class="hole" d="M78.03 73.25 L77.8 72.1 L77.15 71.12 L76.18 70.47 L75.03 70.25 L73.88 70.47 L72.91 71.12 L72.26 72.1 L72.03 73.25 L72.26 74.39 L72.91 75.37 L73.88 76.02 L75.03 76.25 L76.18 76.02 L77.15 75.37 L77.8 74.39 Z"/>
+<path class="fold" d="M70.5 45.36 L30.74 122.51"/>
+<text class="dt" x="74.08" y="185.74" text-anchor="middle">6</text>
+<text class="dt" x="69.31" y="81.19" text-anchor="middle">7</text>
+<text class="dt" x="46.18" y="82.64" text-anchor="middle">glue</text>
+<text class="nt" x="13.0" y="236.89">Cone 14 across, 7.2 tall. Arc radius 10.04, sector 251° in total.</text>
+<text class="nt" x="13.0" y="240.48999999999998">Two halves: glue each tab under the other half's straight edge.</text>
+<text class="nt" x="13.0" y="244.08999999999997">Top hole fits the core tube (1.9 across).</text>
+<text class="nt" x="13.0" y="247.68999999999997">Pixel windows Ø6 mm at 1.5 cm above the rim. Numbers give the chain order.</text>
+</svg>

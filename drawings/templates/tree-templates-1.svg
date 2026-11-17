@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297">
+<style>
+.cut{fill:#fff;stroke:#000;stroke-width:.35}
+.hole{fill:#cfd8e6;stroke:#000;stroke-width:.3}
+.fold{fill:none;stroke:#1a5fb4;stroke-width:.3;stroke-dasharray:2 1.2}
+.mark{fill:none;stroke:#888;stroke-width:.3;stroke-dasharray:.6 .8}
+.dim{fill:none;stroke:#c01c28;stroke-width:.22}
+text{font-family:Arial,Helvetica,sans-serif;fill:#222}
+.dt{font-size:2.9px;fill:#c01c28}
+.nm{font-size:3.4px;font-weight:bold}
+.ct{font-weight:normal;fill:#555}
+.nt{font-size:2.7px;fill:#444}
+.h1{font-size:5px;font-weight:bold}
+.lg{font-size:2.8px;fill:#444}
+</style>
+<rect width="210" height="297" fill="#fff"/>
+<text class="h1" x="12" y="16">Lantern Square tree templates: Christmas tree</text>
+<text class="lg" x="198" y="16" text-anchor="end">page 1 of 9</text>
+<text class="lg" x="12" y="22.5">Print at 100 % on paper, then trace onto thin card. Sizes in cm. The glue tab lies beyond the dashed line.</text>
+<path class="cut" d="M12 26 h12"/><text class="lg" x="26" y="27">cut</text>
+<path class="hole" d="M36 24.6 h6 v3 h-6 Z"/><text class="lg" x="44" y="27">cut out (window)</text>
+<path class="fold" d="M70 26 h12"/><text class="lg" x="84" y="27">fold or score</text>
+<path class="mark" d="M106 26 h12"/><text class="lg" x="120" y="27">mark only</text>
+<path class="dim" d="M148 26 h50 M148 24.5 v3 M198 24.5 v3"/>
+<text class="dt" x="173" y="24" text-anchor="middle">check: 5.0 cm</text>
+<text class="nm" x="23" y="39.0">Core tube<tspan class="ct"> · cut 1 · thin card</tspan></text>
+<path class="cut" d="M23 263.0 L152.38 263.0 L152.38 43.0 L23 43.0 Z"/>
+<path class="hole" d="M59.85 237.0 L65.85 237.0 L65.85 225.0 L59.85 225.0 Z"/>
+<path class="hole" d="M119.54 237.0 L125.54 237.0 L125.54 225.0 L119.54 225.0 Z"/>
+<path class="mark" d="M92.69 263.0 L152.38 263.0 L152.38 241.0 L92.69 241.0 Z"/>
+<path class="mark" d="M92.69 177.34 L152.38 177.34"/>
+<path class="mark" d="M92.69 139.77 L152.38 139.77"/>
+<path class="mark" d="M92.69 104.0 L152.38 104.0"/>
+<path class="mark" d="M92.69 68.91 L152.38 68.91"/>
+<path class="dim" d="M23 270.0 H152.38 M23 268.5 v3 M152.38 268.5 v3"/>
+<text class="dt" x="87.69" y="273.6" text-anchor="middle">12.94</text>
+<path class="dim" d="M16.0 263.0 V43.0 M14.5 263.0 h3 M14.5 43.0 h3"/>
+<text class="dt" x="14.6" y="153.0" text-anchor="middle" transform="rotate(-90 14.6 153.0)">22.0</text>
+<text class="dt" x="122.54" y="253.0" text-anchor="middle">paint brown</text>
+<text class="dt" x="122.54" y="175.34" text-anchor="middle">tier 1 top</text>
+<text class="dt" x="122.54" y="137.77" text-anchor="middle">tier 2 top</text>
+<text class="dt" x="122.54" y="102.0" text-anchor="middle">tier 3 top</text>
+<text class="dt" x="122.54" y="66.91" text-anchor="middle">tier 4 top</text>
+<text class="nt" x="13" y="276.0">Roll two turns around a 1.8 cm former (a thick marker), starting from the left edge,</text>
+<text class="nt" x="13" y="279.6">so the marked strip ends up outside. Glue all over. The two slots line up.</text>
+<text class="nt" x="13" y="283.20000000000005">Pixel wires come up inside the tube from the disc and leave through the slot.</text>
+</svg>

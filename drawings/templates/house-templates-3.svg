@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297">
+<style>
+.cut{fill:#fff;stroke:#000;stroke-width:.35}
+.hole{fill:#cfd8e6;stroke:#000;stroke-width:.3}
+.fold{fill:none;stroke:#1a5fb4;stroke-width:.3;stroke-dasharray:2 1.2}
+.mark{fill:none;stroke:#888;stroke-width:.3;stroke-dasharray:.6 .8}
+.dim{fill:none;stroke:#c01c28;stroke-width:.22}
+text{font-family:Arial,Helvetica,sans-serif;fill:#222}
+.dt{font-size:2.9px;fill:#c01c28}
+.nm{font-size:3.4px;font-weight:bold}
+.ct{font-weight:normal;fill:#555}
+.nt{font-size:2.7px;fill:#444}
+.h1{font-size:5px;font-weight:bold}
+.lg{font-size:2.8px;fill:#444}
+</style>
+<rect width="210" height="297" fill="#fff"/>
+<text class="h1" x="12" y="16">Lantern Square house templates: Chapel</text>
+<text class="lg" x="198" y="16" text-anchor="end">page 3 of 15</text>
+<text class="lg" x="12" y="22.5">Print at 100 % (actual size). All sizes in cm. Board 1.5 mm, corrugated 3 mm (cut walls with the flutes upright).</text>
+<path class="cut" d="M12 26 h12"/><text class="lg" x="26" y="27">cut</text>
+<path class="hole" d="M36 24.6 h6 v3 h-6 Z"/><text class="lg" x="44" y="27">cut out (window)</text>
+<path class="fold" d="M70 26 h12"/><text class="lg" x="84" y="27">fold or score</text>
+<path class="mark" d="M106 26 h12"/><text class="lg" x="120" y="27">mark only</text>
+<path class="dim" d="M148 26 h50 M148 24.5 v3 M198 24.5 v3"/>
+<text class="dt" x="173" y="24" text-anchor="middle">check: 5.0 cm</text>
+<text class="nm" x="23" y="39">Chapel nave divider<tspan class="ct"> · cut 1 · corrugated 3 mm</tspan></text>
+<path class="cut" d="M23 193 L118.5 193 L118.5 101.2 L70.0 43 L23 99.4 Z"/>
+<path class="hole" d="M75.75 184.0 L75.58 182.71 L75.08 181.5 L74.29 180.46 L73.25 179.67 L72.04 179.17 L70.75 179.0 L69.46 179.17 L68.25 179.67 L67.21 180.46 L66.42 181.5 L65.92 182.71 L65.75 184.0 L65.92 185.29 L66.42 186.5 L67.21 187.54 L68.25 188.33 L69.46 188.83 L70.75 189.0 L72.04 188.83 L73.25 188.33 L74.29 187.54 L75.08 186.5 L75.58 185.29 Z"/>
+<path class="dim" d="M23 200.0 H118.5 M23 198.5 v3 M118.5 198.5 v3"/>
+<text class="dt" x="70.75" y="203.6" text-anchor="middle">9.55</text>
+<path class="dim" d="M16.0 193 V99.4 M14.5 193 h3 M14.5 99.4 h3"/>
+<text class="dt" x="14.6" y="146.2" text-anchor="middle" transform="rotate(-90 14.6 146.2)">9.36</text>
+<path class="dim" d="M125.5 193 V101.2 M124.0 193 h3 M124.0 101.2 h3"/>
+<text class="dt" x="124.1" y="147.1" text-anchor="middle" transform="rotate(-90 124.1 147.1)">9.18</text>
+<text class="nt" x="13" y="206">Stands across the middle of the nave so red and green stay apart.</text>
+<text class="nt" x="13" y="209.6">Not symmetric: the left (taller) edge goes against the corrugated left wall.</text>
+<text class="nt" x="13" y="213.2">Hole for LED wires: seal it with tape after wiring.</text>
+</svg>

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297">
+<style>
+.cut{fill:#fff;stroke:#000;stroke-width:.35}
+.hole{fill:#cfd8e6;stroke:#000;stroke-width:.3}
+.fold{fill:none;stroke:#1a5fb4;stroke-width:.3;stroke-dasharray:2 1.2}
+.mark{fill:none;stroke:#888;stroke-width:.3;stroke-dasharray:.6 .8}
+.dim{fill:none;stroke:#c01c28;stroke-width:.22}
+text{font-family:Arial,Helvetica,sans-serif;fill:#222}
+.dt{font-size:2.9px;fill:#c01c28}
+.nm{font-size:3.4px;font-weight:bold}
+.ct{font-weight:normal;fill:#555}
+.nt{font-size:2.7px;fill:#444}
+.h1{font-size:5px;font-weight:bold}
+.lg{font-size:2.8px;fill:#444}
+</style>
+<rect width="210" height="297" fill="#fff"/>
+<text class="h1" x="12" y="16">Lantern Square house templates: Bakery</text>
+<text class="lg" x="198" y="16" text-anchor="end">page 8 of 15</text>
+<text class="lg" x="12" y="22.5">Print at 100 % (actual size). All sizes in cm. Board 1.5 mm, corrugated 3 mm (cut walls with the flutes upright).</text>
+<path class="cut" d="M12 26 h12"/><text class="lg" x="26" y="27">cut</text>
+<path class="hole" d="M36 24.6 h6 v3 h-6 Z"/><text class="lg" x="44" y="27">cut out (window)</text>
+<path class="fold" d="M70 26 h12"/><text class="lg" x="84" y="27">fold or score</text>
+<path class="mark" d="M106 26 h12"/><text class="lg" x="120" y="27">mark only</text>
+<path class="dim" d="M148 26 h50 M148 24.5 v3 M198 24.5 v3"/>
+<text class="dt" x="173" y="24" text-anchor="middle">check: 5.0 cm</text>
+<text class="nm" x="23" y="39.0">Bakery front gable<tspan class="ct"> · cut 1 · board 1.5 mm</tspan></text>
+<path class="cut" d="M23 199.0 L153 199.0 L153 99.0 L88.0 43.0 L23 99.0 Z"/>
+<path class="hole" d="M51.0 184.5 L87.0 184.5 L87.0 170.0 L51.0 170.0 Z"/>
+<path class="hole" d="M89.0 184.5 L125.0 184.5 L125.0 170.0 L89.0 170.0 Z"/>
+<path class="hole" d="M51.0 168.0 L87.0 168.0 L87.0 153.5 L84.0 153.5 L81.0 153.5 L78.0 153.5 L75.0 153.5 L72.0 153.5 L69.0 153.5 L66.0 153.5 L63.0 153.5 L60.0 153.5 L57.0 153.5 L54.0 153.5 L51.0 153.5 Z"/>
+<path class="hole" d="M89.0 168.0 L125.0 168.0 L125.0 153.5 L122.0 153.5 L119.0 153.5 L116.0 153.5 L113.0 153.5 L110.0 153.5 L107.0 153.5 L104.0 153.5 L101.0 153.5 L98.0 153.5 L95.0 153.5 L92.0 153.5 L89.0 153.5 Z"/>
+<path class="hole" d="M43.0 134.0 L52.0 134.0 L52.0 124.0 L43.0 124.0 Z"/>
+<path class="hole" d="M54.0 134.0 L63.0 134.0 L63.0 124.0 L54.0 124.0 Z"/>
+<path class="hole" d="M43.0 122.0 L52.0 122.0 L52.0 112.0 L51.25 112.0 L50.5 112.0 L49.75 112.0 L49.0 112.0 L48.25 112.0 L47.5 112.0 L46.75 112.0 L46.0 112.0 L45.25 112.0 L44.5 112.0 L43.75 112.0 L43.0 112.0 Z"/>
+<path class="hole" d="M54.0 122.0 L63.0 122.0 L63.0 112.0 L62.25 112.0 L61.5 112.0 L60.75 112.0 L60.0 112.0 L59.25 112.0 L58.5 112.0 L57.75 112.0 L57.0 112.0 L56.25 112.0 L55.5 112.0 L54.75 112.0 L54.0 112.0 Z"/>
+<path class="hole" d="M113.0 134.0 L122.0 134.0 L122.0 124.0 L113.0 124.0 Z"/>
+<path class="hole" d="M124.0 134.0 L133.0 134.0 L133.0 124.0 L124.0 124.0 Z"/>
+<path class="hole" d="M113.0 122.0 L122.0 122.0 L122.0 112.0 L121.25 112.0 L120.5 112.0 L119.75 112.0 L119.0 112.0 L118.25 112.0 L117.5 112.0 L116.75 112.0 L116.0 112.0 L115.25 112.0 L114.5 112.0 L113.75 112.0 L113.0 112.0 Z"/>
+<path class="hole" d="M124.0 122.0 L133.0 122.0 L133.0 112.0 L132.25 112.0 L131.5 112.0 L130.75 112.0 L130.0 112.0 L129.25 112.0 L128.5 112.0 L127.75 112.0 L127.0 112.0 L126.25 112.0 L125.5 112.0 L124.75 112.0 L124.0 112.0 Z"/>
+<path class="mark" d="M47.5 144.5 L128.5 144.5 L128.5 143.5 L47.5 143.5 Z"/>
+<path class="dim" d="M23 206.0 H153 M23 204.5 v3 M153 204.5 v3"/>
+<text class="dt" x="88.0" y="209.6" text-anchor="middle">13.0</text>
+<path class="dim" d="M16.0 199.0 V99.0 M14.5 199.0 h3 M14.5 99.0 h3"/>
+<text class="dt" x="14.6" y="149.0" text-anchor="middle" transform="rotate(-90 14.6 149.0)">10.0</text>
+<path class="dim" d="M160.0 199.0 V43.0 M158.5 199.0 h3 M158.5 43.0 h3"/>
+<text class="dt" x="158.6" y="121.0" text-anchor="middle" transform="rotate(-90 158.6 121.0)">15.6</text>
+<text class="nt" x="13" y="212.0">Shop window 7.4 × 3.1, sill 1.45. Upstairs 2.0 × 2.2, sill 6.5, centres 3.5 either side.</text>
+<text class="nt" x="13" y="215.6">Awning glues on the marked line at 5.5. Tracing paper behind all windows.</text>
+<text class="nm" x="23" y="229.2">Bakery awning<tspan class="ct"> · cut 1 · thin card</tspan></text>
+<path class="cut" d="M104.0 233.2 L23 233.2 L23 257.2 L23.0 257.2 L24.45 258.54 L25.89 259.67 L27.34 260.43 L28.79 260.7 L30.23 260.43 L31.68 259.67 L33.12 258.54 L34.57 257.2 L34.57 257.2 L36.02 258.54 L37.46 259.67 L38.91 260.43 L40.36 260.7 L41.8 260.43 L43.25 259.67 L44.7 258.54 L46.14 257.2 L46.14 257.2 L47.59 258.54 L49.04 259.67 L50.48 260.43 L51.93 260.7 L53.38 260.43 L54.82 259.67 L56.27 258.54 L57.71 257.2 L57.71 257.2 L59.16 258.54 L60.61 259.67 L62.05 260.43 L63.5 260.7 L64.95 260.43 L66.39 259.67 L67.84 258.54 L69.29 257.2 L69.29 257.2 L70.73 258.54 L72.18 259.67 L73.62 260.43 L75.07 260.7 L76.52 260.43 L77.96 259.67 L79.41 258.54 L80.86 257.2 L80.86 257.2 L82.3 258.54 L83.75 259.67 L85.2 260.43 L86.64 260.7 L88.09 260.43 L89.54 259.67 L90.98 258.54 L92.43 257.2 L92.43 257.2 L93.88 258.54 L95.32 259.67 L96.77 260.43 L98.21 260.7 L99.66 260.43 L101.11 259.67 L102.55 258.54 L104.0 257.2 Z"/>
+<path class="mark" d="M34.57 257.2 L34.57 239.2"/>
+<path class="mark" d="M46.14 257.2 L46.14 239.2"/>
+<path class="mark" d="M57.71 257.2 L57.71 239.2"/>
+<path class="mark" d="M69.29 257.2 L69.29 239.2"/>
+<path class="mark" d="M80.86 257.2 L80.86 239.2"/>
+<path class="mark" d="M92.43 257.2 L92.43 239.2"/>
+<path class="fold" d="M23 239.2 L104.0 239.2"/>
+<path class="dim" d="M23 267.7 H104.0 M23 266.2 v3 M104.0 266.2 v3"/>
+<text class="dt" x="63.5" y="271.3" text-anchor="middle">8.1</text>
+<text class="nt" x="13" y="273.7">Paint alternate stripes green and cream. Fold the top strip back and</text>
+<text class="nt" x="13" y="277.3">glue it on the line.</text>
+</svg>

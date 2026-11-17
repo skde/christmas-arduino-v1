@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297">
+<style>
+.cut{fill:#fff;stroke:#000;stroke-width:.35}
+.hole{fill:#cfd8e6;stroke:#000;stroke-width:.3}
+.fold{fill:none;stroke:#1a5fb4;stroke-width:.3;stroke-dasharray:2 1.2}
+.mark{fill:none;stroke:#888;stroke-width:.3;stroke-dasharray:.6 .8}
+.dim{fill:none;stroke:#c01c28;stroke-width:.22}
+text{font-family:Arial,Helvetica,sans-serif;fill:#222}
+.dt{font-size:2.9px;fill:#c01c28}
+.nm{font-size:3.4px;font-weight:bold}
+.ct{font-weight:normal;fill:#555}
+.nt{font-size:2.7px;fill:#444}
+.h1{font-size:5px;font-weight:bold}
+.lg{font-size:2.8px;fill:#444}
+</style>
+<rect width="210" height="297" fill="#fff"/>
+<text class="h1" x="12" y="16">Lantern Square tree templates: Christmas tree</text>
+<text class="lg" x="198" y="16" text-anchor="end">page 9 of 9</text>
+<text class="lg" x="12" y="22.5">Print at 100 % on paper, then trace onto thin card. Sizes in cm. The glue tab lies beyond the dashed line.</text>
+<path class="cut" d="M12 26 h12"/><text class="lg" x="26" y="27">cut</text>
+<path class="hole" d="M36 24.6 h6 v3 h-6 Z"/><text class="lg" x="44" y="27">cut out (window)</text>
+<path class="fold" d="M70 26 h12"/><text class="lg" x="84" y="27">fold or score</text>
+<path class="mark" d="M106 26 h12"/><text class="lg" x="120" y="27">mark only</text>
+<path class="dim" d="M148 26 h50 M148 24.5 v3 M198 24.5 v3"/>
+<text class="dt" x="173" y="24" text-anchor="middle">check: 5.0 cm</text>
+<text class="nm" x="23.0" y="39.0">Tree tier 5<tspan class="ct"> · cut 1 · thin card</tspan></text>
+<path class="cut" d="M61.27 187.73 L64.74 186.17 L68.12 184.45 L71.41 182.57 L74.61 180.53 L77.71 178.33 L80.69 175.98 L83.56 173.5 L86.3 170.87 L88.91 168.11 L91.38 165.23 L93.71 162.23 L95.89 159.13 L97.91 155.92 L99.78 152.61 L101.48 149.22 L103.01 145.74 L104.37 142.2 L105.56 138.59 L106.57 134.94 L107.4 131.23 L108.04 127.49 L108.51 123.72 L108.78 119.94 L108.88 116.14 L108.78 112.35 L108.51 108.56 L108.04 104.8 L107.4 101.06 L106.57 97.35 L105.56 93.69 L104.37 90.09 L103.01 86.54 L101.48 83.07 L99.78 79.68 L97.91 76.37 L95.89 73.16 L93.71 70.05 L91.38 67.05 L88.91 64.17 L86.3 61.42 L83.56 58.79 L80.69 56.3 L77.71 53.96 L74.61 51.76 L71.41 49.72 L68.12 47.84 L64.74 46.11 L61.27 44.56 L51.08 43.0 L23.0 109.97 L31.26 116.14 Z"/>
+<path class="hole" d="M84.86 151.0 L84.63 149.85 L83.98 148.88 L83.01 148.23 L81.86 148.0 L80.71 148.23 L79.74 148.88 L79.09 149.85 L78.86 151.0 L79.09 152.15 L79.74 153.12 L80.71 153.77 L81.86 154.0 L83.01 153.77 L83.98 153.12 L84.63 152.15 Z"/>
+<path class="fold" d="M61.27 44.56 L31.26 116.14"/>
+<text class="dt" x="74.45" y="146.9" text-anchor="middle">12</text>
+<text class="dt" x="41.65" y="79.42" text-anchor="middle">glue</text>
+<text class="nt" x="13.0" y="200.73">Cone 5.8 across, 7.2 tall. Arc radius 7.76, sector 134° in total.</text>
+<text class="nt" x="13.0" y="204.32999999999998">Roll into a cone and glue the tab under the other straight edge.</text>
+<text class="nt" x="13.0" y="207.92999999999998">Pointed: it slides over the top of the core tube. Star on a toothpick in</text>
+<text class="nt" x="13.0" y="211.52999999999997">the tip.</text>
+<text class="nt" x="13.0" y="215.12999999999997">Pixel windows Ø6 mm at 1.5 cm above the rim. Numbers give the chain</text>
+<text class="nt" x="13.0" y="218.72999999999996">order.</text>
+</svg>

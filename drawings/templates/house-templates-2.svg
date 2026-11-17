@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297">
+<style>
+.cut{fill:#fff;stroke:#000;stroke-width:.35}
+.hole{fill:#cfd8e6;stroke:#000;stroke-width:.3}
+.fold{fill:none;stroke:#1a5fb4;stroke-width:.3;stroke-dasharray:2 1.2}
+.mark{fill:none;stroke:#888;stroke-width:.3;stroke-dasharray:.6 .8}
+.dim{fill:none;stroke:#c01c28;stroke-width:.22}
+text{font-family:Arial,Helvetica,sans-serif;fill:#222}
+.dt{font-size:2.9px;fill:#c01c28}
+.nm{font-size:3.4px;font-weight:bold}
+.ct{font-weight:normal;fill:#555}
+.nt{font-size:2.7px;fill:#444}
+.h1{font-size:5px;font-weight:bold}
+.lg{font-size:2.8px;fill:#444}
+</style>
+<rect width="210" height="297" fill="#fff"/>
+<text class="h1" x="12" y="16">Lantern Square house templates: Chapel</text>
+<text class="lg" x="198" y="16" text-anchor="end">page 2 of 15</text>
+<text class="lg" x="12" y="22.5">Print at 100 % (actual size). All sizes in cm. Board 1.5 mm, corrugated 3 mm (cut walls with the flutes upright).</text>
+<path class="cut" d="M12 26 h12"/><text class="lg" x="26" y="27">cut</text>
+<path class="hole" d="M36 24.6 h6 v3 h-6 Z"/><text class="lg" x="44" y="27">cut out (window)</text>
+<path class="fold" d="M70 26 h12"/><text class="lg" x="84" y="27">fold or score</text>
+<path class="mark" d="M106 26 h12"/><text class="lg" x="120" y="27">mark only</text>
+<path class="dim" d="M148 26 h50 M148 24.5 v3 M198 24.5 v3"/>
+<text class="dt" x="173" y="24" text-anchor="middle">check: 5.0 cm</text>
+<text class="nm" x="23" y="39.0">Tower side<tspan class="ct"> · cut 2 · board 1.5 mm</tspan></text>
+<path class="cut" d="M23 230.0 L64.5 230.0 L64.5 43.0 L23 43.0 Z"/>
+<path class="hole" d="M27.75 80.0 L59.75 80.0 L59.75 66.0 L57.08 57.16 L54.42 54.07 L51.75 52.14 L49.08 50.92 L46.42 50.22 L43.75 50.0 L41.08 50.22 L38.42 50.92 L35.75 52.14 L33.08 54.07 L30.42 57.16 L27.75 66.0 Z"/>
+<path class="dim" d="M23 237.0 H64.5 M23 235.5 v3 M64.5 235.5 v3"/>
+<text class="dt" x="43.75" y="240.6" text-anchor="middle">4.15</text>
+<path class="dim" d="M16.0 230.0 V43.0 M14.5 230.0 h3 M14.5 43.0 h3"/>
+<text class="dt" x="14.6" y="136.5" text-anchor="middle" transform="rotate(-90 14.6 136.5)">18.7</text>
+<text class="nt" x="13" y="243.0">Fits between front and back. Arch 3.2 wide.</text>
+<text class="nm" x="91" y="39.0">Tower top plate<tspan class="ct"> · cut 1 · corrugated 3 mm</tspan></text>
+<path class="cut" d="M91 97.0 L153.0 97.0 L153.0 43.0 L91 43.0 Z"/>
+<path class="dim" d="M91 104.0 H153.0 M91 102.5 v3 M153.0 102.5 v3"/>
+<text class="dt" x="122.0" y="107.6" text-anchor="middle">6.2</text>
+<path class="dim" d="M84.0 97.0 V43.0 M82.5 97.0 h3 M82.5 43.0 h3"/>
+<text class="dt" x="82.6" y="70.0" text-anchor="middle" transform="rotate(-90 82.6 70.0)">5.4</text>
+<text class="nt" x="81" y="110.0">On top of the tower, 0.4 overhang all round.</text>
+</svg>
